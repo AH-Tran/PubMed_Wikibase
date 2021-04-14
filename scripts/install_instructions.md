@@ -1,7 +1,8 @@
 ## Basic Install
 - Install & Enable WSL2
 - Install Docker
-- For Windows: Install Ubuntu Terminal & Windows Terminal
+- For Windows: Install Ubuntu Terminal & Windows Terminal from Windows Store & relevant libraries
+    - https://codefellows.github.io/setup-guide/
 - Create Directory
 - git clone https://github.com/UB-Mannheim/RaiseWikibase
 cd RaiseWikibase/
