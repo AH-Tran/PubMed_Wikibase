@@ -6,8 +6,11 @@
 - Create Directory
 - git clone https://github.com/UB-Mannheim/RaiseWikibase
 cd RaiseWikibase/
+sudo apt install default-libmysqlclient-dev
 pip3 install -e .
 - env.tmpl > rename to '.env' and insert usernames/password
+    - passwords must be at least 10 characters long!
+    - [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be capitalized or ideally full cap in order to avoid db connection errors
 - docker-compose up -d
 ### Stop Wikibase Docker
 docker-compose down
