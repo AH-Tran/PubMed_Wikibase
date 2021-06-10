@@ -9,7 +9,7 @@ import ast
 from wikibaseintegrator import wbi_core, wbi_login
 
 #function to get a list of all jsondicts
-def dataacquision(queryterm:str, retmax:str) -> list(dict):
+def dataaquisition(queryterm:str, retmax:str) -> dict:
     """
     generates a list of all dictionaries with the metadata information
     Args:
@@ -61,36 +61,9 @@ def dataacquision(queryterm:str, retmax:str) -> list(dict):
         dicts.append(jsondict)
     return dicts
 
-def upload(raw_data: dict):
-    # login object
-    login_instance = wbi_login.Login(user='<bot user name>', pwd='<bot password>')
-    #login_instance = wbi_login.Login(consumer_key='<your_consumer_key>', consumer_secret='<your_consumer_secret>')
-    #login_instance.continue_oauth()
-
-
-    # We have raw data, which should be written to Wikidata, namely two human NCBI entrez gene IDs mapped to two Ensembl Gene IDs
-
-    for entrez_id, ensembl in raw_data.items():
-        # add some references
-        references = [
-            [
-                wbi_core.ItemID(value='Q20641742', prop_nr='P248', is_reference=True),
-                wbi_core.Time(time='+2020-02-08T00:00:00Z', prop_nr='P813', is_reference=True),
-                wbi_core.ExternalID(value='1017', prop_nr='P351', is_reference=True)
-            ]
-        ]
-
-        # data type object
-        entrez_gene_id = wbi_core.String(value=entrez_id, prop_nr='P351', references=references)
-        ensembl_transcript_id = wbi_core.String(value=ensembl, prop_nr='P704', references=references)
-
-        # data goes into a list, because many data objects can be provided to 
-        data = [entrez_gene_id, ensembl_transcript_id]
-
-        # Search for and then edit/create new item
-        wd_item = wbi_core.ItemEngine(data=data)
-        wd_item.write(login_instance)
-
 if __name__ == '__main__':
     #main()
-    print('test')
+    result = dataaquisition('cancer', '10')
+    with open('data.json', 'w') as fp:
+        json.dump(result, fp,  indent=4)
+    #print('test')

@@ -15,6 +15,12 @@
 - MeSH qualifier ID (P9341) 
 - MeSH descriptor/qualifier ID (P9340) 
 - MeSH descriptor ID P486 !!
+    - How to fetch mesh term list:
+    https://www.biostars.org/p/239624/
+    https://www.biostars.org/p/308345/
+    https://id.nlm.nih.gov/mesh/
+    https://www.nlm.nih.gov/mesh/meshhome.html
+    https://www.ncbi.nlm.nih.gov/mesh/?term=infectious+disease
 
 **Example Article**
 - https://www.wikidata.org/wiki/Q87830400
