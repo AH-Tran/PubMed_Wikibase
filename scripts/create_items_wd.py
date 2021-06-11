@@ -1,4 +1,5 @@
 # load the necessary libraries
+from logging import log
 from RaiseWikibase.raiser import create_bot
 from RaiseWikibase.settings import Settings
 from wikidataintegrator.wdi_config import config as wdi_config
@@ -47,6 +48,7 @@ if __name__ == "__main__":
     login_instance = wdi_login.Login(user=config.username, pwd=config.password)
 
     # login to wikibase
-   #login_instance = wdi_login.WDLogin(user=config.username, pwd=config.password, mediawiki_api_url=config.mediawiki_api_url)
+    #login_instance = wdi_login.WDLogin(user=config.username, pwd=config.password, mediawiki_api_url=config.mediawiki_api_url)
+    upload_data(login_instance, config)
 
 
