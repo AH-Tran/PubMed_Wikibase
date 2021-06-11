@@ -9,7 +9,7 @@ import ast
 from wikibaseintegrator import wbi_core, wbi_login
 
 #function to get a list of all jsondicts
-def dataaquisition(queryterm:str, retmax:str) -> dict:
+def dataaquisition(queryterm:str, retmax:str) -> list(dict):
     """
     generates a list of all dictionaries with the metadata information
     Args:
@@ -63,7 +63,7 @@ def dataaquisition(queryterm:str, retmax:str) -> dict:
 
 if __name__ == '__main__':
     #main()
-    result = dataaquisition('cancer', '10')
-    with open('data.json', 'w') as fp:
-        json.dump(result, fp,  indent=4)
+    #result = dataaquisition('cancer', '10')
+    #with open('data.json', 'w') as fp:
+    #    json.dump(result, fp,  indent=4)
     #print('test')

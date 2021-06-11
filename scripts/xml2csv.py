@@ -2,24 +2,26 @@
 import xml.etree.ElementTree as Xet
 import pandas as pd
   
-cols = ["name", "phone", "email", "date", "country"]
+cols = ["title", "abstract", "author", "pubmed id", "publication date", "mesh descriptor id"]
 rows = []
   
 # Parsing the XML file
-xmlparse = Xet.parse('sample.xml')
-root = xmlparse.getroot()
-for i in root:
-    name = i.find("name").text
-    phone = i.find("phone").text
-    email = i.find("email").text
-    date = i.find("date").text
-    country = i.find("country").text
+xmlparse = Xet.parse('pubmed_data.xml')
+#root = xmlparse.getroot()
+for elem in xmlparse.iter:
+    title = elem.find("ArticleTitle").text
+    abstract = elem.find("AbstractText").text
+    author = elem.find("Author").text
+    pubmed_id = elem.find("PMID").text
+    pubdate = elem.find("PubDate").text
+    mesh = elem.find("MeshHeading").text
   
-    rows.append({"name": name,
-                 "phone": phone,
-                 "email": email,
-                 "date": date,
-                 "country": country})
+    rows.append({"title": title,
+                 "abstract": abstract,
+                 "author": author,
+                 "pubmed id": pubmed_id,
+                 "publication": pubdate,
+                 "mesh descriptor id": mesh})
   
 df = pd.DataFrame(rows, columns=cols)
   

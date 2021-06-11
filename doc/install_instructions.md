@@ -34,6 +34,13 @@ docker-compose up --no-deps -d wikibase
         'tidyConfigFile' => "${DOLLAR}IP/includes/tidy/tidy.conf",
     ];
 
+## Filling the Wikibase
+In order to fill the wikibase, execute these python scripts in this order:  
+- create_properties.py
+- create_metadata.py
+- create_mesh_items.py
+- create_items_wd.py
+
 ## Backups
 - Take snapshots of: docker-compose file, mounted files
 ### Volume backup

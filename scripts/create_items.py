@@ -145,20 +145,6 @@ if __name__ == "__main__":
 
     time0 = time.time()
 
-    # Create first four properties in a local Wikibase
-    p1 = property_wid()
-    p2 = property_wd('P1630')
-    p3 = property_wd('P1921')
-    p4 = property_hrn()
-    batch('wikibase-property', [p1, p2, p3, p4])
-
-    # Create 8400+ Wikidata properties except of the already created p2 and p3.
-    plist = property_wd_all()
-    batch('wikibase-property', plist)
-
-    # Fill all texts
-    fill_texts()
-
     connection = DBConnection()
     [opencorporatesid] = connection.search_text_str('OpenCorporates ID', strict=True)
     [streetaddress] = connection.search_text_str('street address', strict=True)

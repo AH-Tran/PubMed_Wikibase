@@ -144,9 +144,9 @@ def fill_texts():
 def first_property_setup():
     """Fill empty Wikibase with first properties and layout"""
     # Create first three properties in a local Wikibase
-    p1 = property_wid()
-    p2 = property_wd('P1630')
-    p3 = property_wd('P1921')
+    p1 = property_wid() #wikibaseID
+    p2 = property_wd('P1630') #formatter URL
+    p3 = property_wd('P1921') #formatter URI for RDF resource
     batch('wikibase-property', [p1, p2, p3])
 
     # Create PubMed relevant properties
@@ -179,6 +179,7 @@ def first_property_setup():
     pmesh2 = property_wd('P6694') #MeSH concept ID
     pmesh3 = property_wd('P9341') #MeSH qualifier ID 
     pmesh4 = property_wd('P486') #MeSH descriptor ID
+    #pmesh5 = property_wd('') #MeSH Headings
     batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
 
     #Create new Pubmed relevant properties not existent in Wikidata
