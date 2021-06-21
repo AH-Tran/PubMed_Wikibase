@@ -3,3 +3,4 @@ wikidataintegrator
 wikibaseintegrator
 pandas
 xmltodict
+xml_to_df
