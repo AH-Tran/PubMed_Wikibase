@@ -63,7 +63,7 @@ def dataaquisition(queryterm:str, retmax:str) -> list(dict):
 
 if __name__ == '__main__':
     #main()
-    #result = dataaquisition('cancer', '10')
+    result = dataaquisition('cancer', '10')
     #with open('data.json', 'w') as fp:
     #    json.dump(result, fp,  indent=4)
     #print('test')

@@ -2,28 +2,15 @@
 import xml.etree.ElementTree as Xet
 import pandas as pd
   
-cols = ["title", "abstract", "author", "pubmed id", "publication date", "mesh descriptor id"]
-rows = []
-  
-# Parsing the XML file
-xmlparse = Xet.parse('pubmed_data.xml')
-#root = xmlparse.getroot()
-for elem in xmlparse.iter:
-    title = elem.find("ArticleTitle").text
-    abstract = elem.find("AbstractText").text
-    author = elem.find("Author").text
-    pubmed_id = elem.find("PMID").text
-    pubdate = elem.find("PubDate").text
-    mesh = elem.find("MeshHeading").text
-  
-    rows.append({"title": title,
-                 "abstract": abstract,
-                 "author": author,
-                 "pubmed id": pubmed_id,
-                 "publication": pubdate,
-                 "mesh descriptor id": mesh})
-  
-df = pd.DataFrame(rows, columns=cols)
-  
-# Writing dataframe to csv
-df.to_csv('output.csv')
+mydata = pd.read_csv("pubmed_data.csv")
+#print(mydata.loc[0].at['PubmedArticle_MedlineCitation_Owner'])
+#print(mydata.at[0,'PubmedArticle_MedlineCitation_Owner'])
+for index, row in mydata.iterrows():
+    print(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'])
+    #print(index)
+#    print(row)
+    print("*** END ITERATION ***")
+#print(mydata.iloc[0]['PubmedArticle_MedlineCitation_Article_ArticleTitle'])
+
+
+
