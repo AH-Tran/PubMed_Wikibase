@@ -143,3 +143,6 @@ prep_data/
 # index
 index/
 RaiseWikibase/
+
+# scripts
+scripts/dump/

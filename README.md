@@ -40,3 +40,11 @@ docker-compose up --no-deps -d wikibase
 docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
 docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
 docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
+
+
+### Current Script Usage:
+1. General Wikibase Setup
+2. create_properties.py
+3. data_retrieval.py
+4. create_mesh_items.py
+5. create_items_wd.py
