@@ -46,5 +46,6 @@ docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackup
 1. General Wikibase Setup [o]
 2. create_properties.py [o]
 3. data_retrieval.py [x]
+    - desired output: pubmed_data.xml or pubmed_data.csv 
 4. create_mesh_items.py [x]
 5. create_items_wd.py [o]
