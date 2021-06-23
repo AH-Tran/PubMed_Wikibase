@@ -1,4 +1,22 @@
-## Basic Install
+```
+A repository for the purpose of the creation of a wikibase instance centered around the semantic connection between PubMed Metadata and MeSH Terms, including automatic property and item creating
+```
+## Table of contents
+- [How to use](#how-to-use)
+  * [Installation](#installation)
+  * [Customizing Wikibase](#Customizing Wikibase)
+  * [Creating Properties](#Creating Properties)
+  * [Creating Items](Creating Items)
+  * [Updating Item Connection](#Updating Item Connection)
+  * [Useful Docker Commands](#Useful Docker Commands])
+  * [Creating Backups](#Creating Backups)
+- [Acknowledgments](#acknowledgments)
+- [Further Research ](#Further Research)
+
+## How to us
+
+### Installation
+```
 - Install & Enable WSL2
 - Install Docker
 - For Windows: Install Ubuntu Terminal & Windows Terminal from Windows Store & relevant libraries
@@ -12,17 +30,11 @@ pip3 install -e .
     - passwords must be at least 10 characters long!
     - [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be capitalized or ideally full cap in order to avoid db connection errors
 - docker-compose up -d
-### Stop Wikibase Docker
-docker-compose down
-### Remove uploaded Data & run fresh Wikibase Instance
-sudo rm -rf mediawiki-*  query-service-data/ quickstatements-data/
-docker-compose up -d
-
+```
+### Customizing Wikibase
+```
 ## Making Changes
 - LocalSettings.php.template
-### Reload a single service (example: wikibase) to adopt new changes in settings
-docker-compose up --no-deps -d wikibase
-
 ## Extensions
 - Download Extension in ./RaiseWikibase/extensions
 - Add Volume to docker-ompose.yml
@@ -33,14 +45,32 @@ docker-compose up --no-deps -d wikibase
         'driver' => 'RaggettInternalPHP',
         'tidyConfigFile' => "${DOLLAR}IP/includes/tidy/tidy.conf",
     ];
+```
 
-## Backups
+### Creating Properties
+create_properties.py
+### Creating Items
+create_items_wd.py
+### Updating Item Connection
+update_statements.py
+```
+### Stop Wikibase Docker
+docker-compose down
+### Remove uploaded Data & run fresh Wikibase Instance
+sudo rm -rf mediawiki-*  query-service-data/ quickstatements-data/
+docker-compose up -d
+### Reload a single service (example: wikibase) to adopt new changes in settings
+docker-compose up --no-deps -d wikibase
+```
+
+### Creating Backups
+```
 - Take snapshots of: docker-compose file, mounted files
 ### Volume backup
 - docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
 - docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
 - docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
-
+```
 ## Current Script Usage:
 1. General Wikibase Setup [o]
 2. create_properties.py [o]
