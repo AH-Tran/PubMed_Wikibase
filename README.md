@@ -53,8 +53,38 @@ pip3 install -r requirements.txt
 
 ### Creating Properties
 create_properties.py
+```
+#Create MeSH relevant properties
+pmesh1 = property_wd('P672') #MeSH tree code
+pmesh2 = property_wd('P6694') #MeSH concept ID
+pmesh3 = property_wd('P9341') #MeSH qualifier ID 
+pmesh4 = property_wd('P486') #MeSH descriptor ID
+#pmesh5 = property_wd('') #MeSH Headings
+batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
+```
 ### Creating Items
 create_items_wd.py
+```
+def upload_data(login_instance, config):
+    # load excel table to load into Wikibase
+    mydata = pd.read_csv("pubmed_data.csv")
+    for index, row in mydata.iterrows():
+        ## Prepare the statements to be added
+        item_statements = [] # all statements for one item
+        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], prop_nr="P11")) #title 
+        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_AuthorList_Author_LastName'], prop_nr="P12")) #author
+
+        ## instantiate the Wikibase page, add statements, labels and descriptions
+        wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
+        wbPage.set_label(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], lang="en")
+        wbPage.set_description("Article retrieved from PubMed", lang="en")
+
+        ## sanity check (debug)
+        pprint.pprint(wbPage.get_wd_json_representation())
+
+        ## write data to wikibase
+        wbPage.write(login_instance)
+```
 ### Updating Item Connection
 update_statements.py
 ### Useful Docker Commands
