@@ -10,7 +10,7 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
   * [Installation](#installation)
   * [Customizing Wikibase](#customizing-wikibase)
   * [Creating Properties](#creating-properties)
-  * [Creating Items](creating-items)
+  * [Creating Items](#creating-items)
   * [Updating Item Connection](#updating-item-connection)
   * [Useful Docker Commands](#useful-docker-commands)
   * [Creating Backups](#creating-backups)
