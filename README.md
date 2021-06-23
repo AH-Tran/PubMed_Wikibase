@@ -37,11 +37,11 @@ docker-compose up --no-deps -d wikibase
 ## Backups
 - Take snapshots of: docker-compose file, mounted files
 ### Volume backup
-docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
-docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
-docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
+- docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
+- docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
+- docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
 
-### Current Script Usage:
+## Current Script Usage:
 1. General Wikibase Setup [o]
 2. create_properties.py [o]
 3. data_retrieval.py [x]
@@ -49,3 +49,12 @@ docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackup
                     - mesh_data.csv
 4. create_mesh_items.py [x]
 5. create_items_wd.py [o]
+
+## Further Research
+- Dynamically Adapt Property Creation with CSV 
+- Extract MeSH Entities from Wikidata
+- Enter Wikibase into Wikibase Registry
+- Authenticate Author Entity with either Scholia 
+- Document new encountered Limits
+- IR/NLP metrics on Abstracts
+- MeSH Tree Hierarchy as Knowledge Graph Structure
