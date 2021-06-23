@@ -1,5 +1,5 @@
 ```
-A repository for the purpose of the creation of a wikibase instance centered around the semantic connection between PubMed Metadata and MeSH Terms, including automatic property and item creating
+Automated creation and filling of a new wikibase instance with PubMed metadata and MeSH terms.
 ```
 ## Table of contents
 - [How to use](#how-to-use)
