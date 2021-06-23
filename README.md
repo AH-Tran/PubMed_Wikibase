@@ -3,6 +3,7 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 ```
 * Automated inserts into a fresh Wikibase instance
 * Scripts for automated property and item creation given a csv
+* Scripts tested in Ubuntu 20.04 with Python 3.9.2
 
 ## Table of contents
 - [How to use](#how-to-use)
