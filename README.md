@@ -53,7 +53,7 @@ pip3 install -r requirements.txt
 
 ### Creating Properties
 create_properties.py
-```
+```python
 #Create MeSH relevant properties
 pmesh1 = property_wd('P672') #MeSH tree code
 pmesh2 = property_wd('P6694') #MeSH concept ID
@@ -64,7 +64,7 @@ batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
 ```
 ### Creating Items
 create_items_wd.py
-```
+```python
 def upload_data(login_instance, config):
     # load excel table to load into Wikibase
     mydata = pd.read_csv("pubmed_data.csv")
