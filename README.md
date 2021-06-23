@@ -54,7 +54,7 @@ docker-compose up --no-deps -d wikibase
 - Dynamically Adapt Property Creation with CSV 
 - Extract MeSH Entities from Wikidata
 - Enter Wikibase into Wikibase Registry
-- Authenticate Author Entity with either Scholia 
+- Authenticate Author Entity with either Scholia or 
 - Document new encountered Limits
 - IR/NLP metrics on Abstracts
 - MeSH Tree Hierarchy as Knowledge Graph Structure
