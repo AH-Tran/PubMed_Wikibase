@@ -4,16 +4,16 @@ A repository for the purpose of the creation of a wikibase instance centered aro
 ## Table of contents
 - [How to use](#how-to-use)
   * [Installation](#installation)
-  * [Customizing Wikibase](#Customizing Wikibase)
-  * [Creating Properties](#Creating Properties)
-  * [Creating Items](Creating Items)
-  * [Updating Item Connection](#Updating Item Connection)
-  * [Useful Docker Commands](#Useful Docker Commands])
-  * [Creating Backups](#Creating Backups)
+  * [Customizing Wikibase](#customizing-wikibase)
+  * [Creating Properties](#creating-properties)
+  * [Creating Items](creating-items)
+  * [Updating Item Connection](#updating-item-connection)
+  * [Useful Docker Commands](#useful-docker-commands)
+  * [Creating Backups](#creating-backups)
 - [Acknowledgments](#acknowledgments)
-- [Further Research ](#Further Research)
+- [Further Research ](#further-research)
 
-## How to us
+## How to use
 
 ### Installation
 ```
@@ -53,6 +53,7 @@ create_properties.py
 create_items_wd.py
 ### Updating Item Connection
 update_statements.py
+### Useful Docker Commands
 ```
 ### Stop Wikibase Docker
 docker-compose down
@@ -79,6 +80,9 @@ docker-compose up --no-deps -d wikibase
                     - mesh_data.csv
 4. create_mesh_items.py [x]
 5. create_items_wd.py [o]
+
+
+## Acknowledgements
 
 ## Further Research
 - Dynamically Adapt Property Creation with CSV 
