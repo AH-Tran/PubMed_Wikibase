@@ -1,6 +1,9 @@
 ```
 Automated creation and filling of a new wikibase instance with PubMed metadata and MeSH terms.
 ```
+* Automated inserts into a fresh Wikibase instance
+* Scripts for automated property and item creation given a csv
+
 ## Table of contents
 - [How to use](#how-to-use)
   * [Installation](#installation)
@@ -29,6 +32,7 @@ pip3 install -e .
 - env.tmpl > rename to '.env' and insert usernames/password
     - passwords must be at least 10 characters long!
     - [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be capitalized or ideally full cap in order to avoid db connection errors
+pip3 install -r requirements.txt
 - docker-compose up -d
 ```
 ### Customizing Wikibase
@@ -86,6 +90,7 @@ docker-compose up --no-deps -d wikibase
 
 ## Further Research
 - Dynamically Adapt Property Creation with CSV 
+- Support for different formats than CSV
 - Extract MeSH Entities from Wikidata
 - Enter Wikibase into Wikibase Registry
 - Authenticate Author Entity with either Scholia or 
