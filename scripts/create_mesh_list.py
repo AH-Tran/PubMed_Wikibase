@@ -102,4 +102,6 @@ def MeSHTermDF(queryterm):
 
 if __name__ == '__main__':
     df = MeSHTermDF(queryterm="infectious diseases")
-    print(df.head(10))
+    #one can save the dataframe in csv or xlsx or whatever
+    name = 'MeSHTermList.csv'
+    df.to_csv(name)
