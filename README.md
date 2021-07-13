@@ -132,3 +132,7 @@ docker-compose up --no-deps -d wikibase
 - Document new encountered Limits
 - IR/NLP metrics on Abstracts
 - MeSH Tree Hierarchy as Knowledge Graph Structure
+## TODO for Documentation
+- Pipeline Overview
+- Knowledge Graph Structure
+- 
