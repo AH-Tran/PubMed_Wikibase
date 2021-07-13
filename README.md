@@ -134,5 +134,6 @@ docker-compose up --no-deps -d wikibase
 - MeSH Tree Hierarchy as Knowledge Graph Structure
 ## TODO for Documentation
 - Pipeline Overview
-- Knowledge Graph Structure
-- 
+- Knowledge Graph Structure with example Screenshots
+- Data Retrieval Examples
+- MeSH Examples
