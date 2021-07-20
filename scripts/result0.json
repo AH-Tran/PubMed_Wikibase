@@ -1,0 +1,186 @@
+{
+    "PubmedArticleSet": {
+        "PubmedArticle": {
+            "MedlineCitation": {
+                "@Owner": "NLM",
+                "@Status": "Publisher",
+                "Article": {
+                    "@PubModel": "Print-Electronic",
+                    "Abstract": {
+                        "AbstractText": "Septic joint arthritis in the small joints of the hand can be caused by penetrating trauma, ruptured ganglion cysts, or open joint dislocations, among others. The use of external fixation for the treatment of this condition has been reported in the past as a means of temporary joint distraction, or for secondary fusion procedures. In the present article, the authors describe a surgical technique involving the use of a low-cost external fixator for the primary arthrodesis of infected distal interphalangeal joints of the hand. The external fixator is fabricated with simple materials, threaded Kirshner wires, bone cement, and an insulin syringe, which the authors have used to fuse the distal interphalangeal joint primarily when destroyed by septic arthritis.",
+                        "CopyrightInformation": "Copyright \u00a9 2021 Wolters Kluwer Health, Inc. All rights reserved."
+                    },
+                    "ArticleDate": {
+                        "@DateType": "Electronic",
+                        "Day": "19",
+                        "Month": "07",
+                        "Year": "2021"
+                    },
+                    "ArticleTitle": "One-stage Distal Interphalangeal Joint Fusion With External Fixator for the Treatment of Septic Joint Arthritis.",
+                    "AuthorList": {
+                        "@CompleteYN": "Y",
+                        "Author": [
+                            {
+                                "@ValidYN": "Y",
+                                "AffiliationInfo": {
+                                    "Affiliation": "Hand Surgery Unit, Department of Orthopedics Infectious Diseases Unit, Hospital Universitario Marques de Valdecilla, Santander, Cantabria, Spain."
+                                },
+                                "ForeName": "Jose",
+                                "Initials": "J",
+                                "LastName": "Couceiro"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Manuel R",
+                                "Initials": "MR",
+                                "LastName": "Sanchez-Crespo"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Higinio",
+                                "Initials": "H",
+                                "LastName": "Ayala"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Fernando",
+                                "Initials": "F",
+                                "LastName": "Del Canto"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Guillermo",
+                                "Initials": "G",
+                                "LastName": "Menendez"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Marta",
+                                "Initials": "M",
+                                "LastName": "Fernandez-Sampedro"
+                            }
+                        ]
+                    },
+                    "ELocationID": {
+                        "#text": "10.1097/BTH.0000000000000361",
+                        "@EIdType": "doi",
+                        "@ValidYN": "Y"
+                    },
+                    "Journal": {
+                        "ISOAbbreviation": "Tech Hand Up Extrem Surg",
+                        "ISSN": {
+                            "#text": "1531-6572",
+                            "@IssnType": "Electronic"
+                        },
+                        "JournalIssue": {
+                            "@CitedMedium": "Internet",
+                            "PubDate": {
+                                "Day": "19",
+                                "Month": "Jul",
+                                "Year": "2021"
+                            }
+                        },
+                        "Title": "Techniques in hand & upper extremity surgery"
+                    },
+                    "Language": "eng",
+                    "PublicationTypeList": {
+                        "PublicationType": {
+                            "#text": "Journal Article",
+                            "@UI": "D016428"
+                        }
+                    }
+                },
+                "DateRevised": {
+                    "Day": "19",
+                    "Month": "07",
+                    "Year": "2021"
+                },
+                "MedlineJournalInfo": {
+                    "Country": "United States",
+                    "ISSNLinking": "1089-3393",
+                    "MedlineTA": "Tech Hand Up Extrem Surg",
+                    "NlmUniqueID": "9704676"
+                },
+                "MeshHeadingList": {
+                    "DescriptorName": [
+                        {
+                            "#text": "External Fixators",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D016267"
+                        },
+                        {
+                            "#text": "Internal Fixators",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D016268"
+                        },
+                        {
+                            "#text": "Therapeutics",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D013812"
+                        },
+                        {
+                            "#text": "Retreatment",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D019233"
+                        },
+                        {
+                            "#text": "Extracorporeal Membrane Oxygenation",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D015199"
+                        },
+                        {
+                            "#text": "Health Care Costs",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D017048"
+                        },
+                        {
+                            "#text": "Water Purification",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D018508"
+                        },
+                        {
+                            "#text": "Arthritis, Infectious",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D001170"
+                        }
+                    ]
+                },
+                "PMID": {
+                    "#text": "34280937",
+                    "@Version": "1"
+                }
+            },
+            "PubmedData": {
+                "History": {
+                    "PubMedPubDate": [
+                        {
+                            "@PubStatus": "entrez",
+                            "Day": "19",
+                            "Hour": "20",
+                            "Minute": "31",
+                            "Month": "7",
+                            "Year": "2021"
+                        },
+                        {
+                            "@PubStatus": "pubmed",
+                            "Day": "20",
+                            "Hour": "6",
+                            "Minute": "0",
+                            "Month": "7",
+                            "Year": "2021"
+                        },
+                        {
+                            "@PubStatus": "medline",
+                            "Day": "20",
+                            "Hour": "6",
+                            "Minute": "0",
+                            "Month": "7",
+                            "Year": "2021"
+                        }
+                    ]
+                },
+                "PublicationStatus": "aheadofprint"
+            }
+        }
+    }
+}
