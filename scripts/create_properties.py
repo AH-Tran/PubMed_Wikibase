@@ -150,45 +150,50 @@ def first_property_setup():
     batch('wikibase-property', [p1, p2, p3])
 
     # Create PubMed relevant properties
-    pb0 = property_wd('P932') #PBMCID
-    pb1 = property_wd('P698') #pubmed id
-    pb2 = property_wd('P496') #orcid
-    pb3 = property_wd('P2322') #article id
-    pb4 = property_wd('P356') #DOI
-    pb5 = property_wd('P5875') #Researchgate publication id
-    pb6 = property_wd('P8978') #DBLP publication
-    pb7 = property_wd('P1476') #title
-    pb8 = property_wd('P50') #author
-    pb9 = property_wd('P2093') #author name string
-    pb10 = property_wd('P577') #publication date
-    pb11 = property_wd('P921') #main subject
-    pb12 = property_wd('P31') #instance of
-    pb13 = property_wd('P4510') #describes a project that uses
-    pb14 = property_wd('P407') #language of work or name
-    pb15 = property_wd('P1104') #number of pages
-    pb16 = property_wd('P1433') #published in
-    pb17 = property_wd('P478') #volumes
-    pb18 = property_wd('P2860') #cites work
-    pb19 = property_wd('P3176') #uses property
-    pb20 = property_wd('P859') #sponsor
-    pb21 = property_wd('P275') #copyright license
-    batch('wikibase-property', [pb0, pb1, pb2, pb3, pb4, pb5, pb6, pb7, pb8, pb9, pb10, pb11, pb12, pb13, pb14, pb15, pb16, pb17, pb18, pb19, pb20, pb21])
+    p4 = property_wd('P932') #PBMCID
+    p5 = property_wd('P698') #pubmed id
+    p6 = property_wd('P496') #orcid
+    p7 = property_wd('P2322') #article id
+    p8 = property_wd('P356') #DOI
+    p9 = property_wd('P5875') #Researchgate publication id
+    p10 = property_wd('P8978') #DBLP publication
+    p11 = property_wd('P1476') #title
+    p12 = property_wd('P50') #author
+    p13 = property_wd('P2093') #author name string
+    p14 = property_wd('P577') #publication date
+    p15 = property_wd('P921') #main subject
+    p16 = property_wd('P31') #instance of
+    p17 = property_wd('P4510') #describes a project that uses
+    p18 = property_wd('P407') #language of work or name
+    p19 = property_wd('P1104') #number of pages
+    p20 = property_wd('P1433') #published in
+    p21 = property_wd('P478') #volumes
+    p22 = property_wd('P2860') #cites work
+    p23 = property_wd('P3176') #uses property
+    p24 = property_wd('P859') #sponsor
+    p25 = property_wd('P275') #copyright license
+    batch('wikibase-property', [p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25])
 
     #Create MeSH relevant properties
-    pmesh1 = property_wd('P672') #MeSH tree code
-    pmesh2 = property_wd('P6694') #MeSH concept ID
-    pmesh3 = property_wd('P9341') #MeSH qualifier ID 
-    pmesh4 = property_wd('P486') #MeSH descriptor ID
+    p26 = property_wd('P486') #MeSH descriptor ID/ Unique ID
+    p27 = create_property('MeSH Heading', ['Heading'], 'Label of the MeSH descriptor ID', 'string')
+    p28 = create_property('ScopeNote', ['Note'], 'Note describing further the Label of a MeSH Heading', 'string')
+    p29 = create_property('MeshBrowserLink', ['Mesh URL', 'MeSH Browser'], 'MeSH Browser URL of a specific Mesh Heading', 'url')
+    p30 = create_property('MeSH Treecode', ['Tree', 'MeSH Tree'], 'MeSH Tree Code of a specific Mesh Heading', 'string')
+    #pmesh1 = property_wd('P672') #MeSH tree code
+    #pmesh2 = property_wd('P6694') #MeSH concept ID
+    #pmesh3 = property_wd('P9341') #MeSH qualifier ID 
+
     #pmesh5 = property_wd('') #MeSH Headings
-    batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
+    batch('wikibase-property', [p26, p27, p28, p29, p30])
 
     #Create new Pubmed relevant properties not existent in Wikidata
     #keywords, affiliations, abstract, publication type
-    np1 = create_property('keywords', ['keyword'], 'main keywords describing a publication', 'string')
-    np2 = create_property('affiliations', ['affiliation', 'institute', 'organization'], 'organizations and affiliations associated with a given publication', 'string')
-    np3 = create_property('abstract', ['abstracts', 'short summary'], 'The abstract of a given publication, summarizing the publications findings', 'string')
-    np4 = create_property('publication type', ['publication medium'], 'The type/medium of the given publication i.e. journals, reports, etc.', 'string')
-    batch('wikibase-property', [np1, np2, np3, np4])
+    p31 = create_property('keywords', ['keyword'], 'main keywords describing a publication', 'string')
+    p32 = create_property('affiliations', ['affiliation', 'institute', 'organization'], 'organizations and affiliations associated with a given publication', 'string')
+    p33 = create_property('abstract', ['abstracts', 'short summary'], 'The abstract of a given publication, summarizing the publications findings', 'string')
+    p34 = create_property('publication type', ['publication medium'], 'The type/medium of the given publication i.e. journals, reports, etc.', 'string')
+    batch('wikibase-property', [p31, p32, p33, p34])
 
     # Fill all texts
     fill_texts()
