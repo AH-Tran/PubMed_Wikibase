@@ -164,9 +164,8 @@ def dataaquisition(queryterm):
         timelist.append(end-start)
         print("MeSHTerm:",str(urllist.index(n)+1)+"/"+str(len(urllist)),"Est. time left:",time.strftime('%H:%M:%S',time.gmtime(int(sum(timelist)/len(timelist)*(len(urllist)-urllist.index(n))))),"Hours")
     df['TreeNumbers'] = TNlist
-    return df,dicts
+    df.to_csv('meshtermlist.csv')
+    return dicts
 
 if __name__ == '__main__':
-    df,result = dataaquisition('infectious diseases')
-    print(len(result))
-    print(len(df))
+    result = dataaquisition('infectious diseases')
