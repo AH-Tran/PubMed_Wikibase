@@ -6,22 +6,24 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 * Scripts tested in a Windows system within a Ubuntu 20.04 terminal with Python 3.9.2
 
 ## Table of contents
+- [Table of contents](#table-of-contents)
 - [Overview](#overview)
 - [How to use](#how-to-use)
-  * [Installation](#installation)
-  * [Customizing Wikibase](#customizing-wikibase)
+  - [Installation](#installation)
+  - [Customizing Wikibase](#customizing-wikibase)
 - [Important Scripts](#important-scripts)
-  * [Systems.py](#systems.py)
-  * [Wikibase Log-in](#wikibase-log-in)
-  * [Creating Properties](#creating-properties)
-  * [Data Retrieval](#data-retrieval)
-  * [Creating MeSH Items](#creating-mesh-items)
-  * [Creating PubMed Items](#creating-pubmed-items)
+  - [Systems.py](#systemspy)
+  - [Wikibase Log-in](#wikibase-log-in)
+  - [Creating Properties](#creating-properties)
+  - [Data Retrieval](#data-retrieval)
+  - [Creating MeSH Items](#creating-mesh-items)
+  - [Creating PubMed Items](#creating-pubmed-items)
 - [Useful Docker Commands](#useful-docker-commands)
-  * [Creating Backups](#creating-backups)
+  - [Creating Backups](#creating-backups)
 - [Sources](#sources)
-- [Acknowledgments](#acknowledgments)
-- [Further Research ](#further-research)
+- [Acknowledgements](#acknowledgements)
+- [Further Research](#further-research)
+- [TODO for Documentation](#todo-for-documentation)
 
 ## Overview
 A Repository that specializes itself in creating a fresh Wikibase instance filled with relevant PubMed metadata and MeSH Headings from the NLM Database.
@@ -116,10 +118,26 @@ p30 = create_property('MeSH Treecode', ['Tree', 'MeSH Tree'], 'MeSH Tree Code of
 batch('wikibase-property', [p27, p28, p29, p30])
 ```
 ### Data Retrieval
->Description Here, Data Retrieval from PubMed, Enrichment with SciSpacy:  
+>Automatically creates a csv-file with all used MeSHTerms,their description and tree number and a list of all articles found to the queryterm:  
 >[data_retrieval.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/data_retrieval.py)
 ```python
-
+urllist = df['MeSHBrowserLink'].tolist()
+for i in urllist:
+    n = i
+    start = time.time()
+    driver = webdriver.Chrome(chrome_options=options)
+    driver.get(i)
+    time.sleep(3)
+    element = driver.find_elements_by_xpath('//a[contains(@id,"treeNumber_")]')
+    elementlist = []
+    for i in element:
+        elementlist.append(i.text)
+    TNlist.append(elementlist)
+    end = time.time()
+    timelist.append(end-start)
+df['TreeNumbers'] = TNlist
+df.to_csv('meshtermlist.csv')
+return dicts
 ```
 
 ### Creating MeSH Items
