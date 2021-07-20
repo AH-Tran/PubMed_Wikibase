@@ -7,7 +7,7 @@ from wikidataintegrator import wdi_core, wdi_login
 import pandas as pd
 import pprint
 
-def upload_data(login_instance, config):
+def upload_data(login_instance, config, metadata):
     # load excel table to load into Wikibase
     mydata = pd.read_csv("pubmed_data.csv")
     for index, row in mydata.iterrows():
@@ -34,6 +34,25 @@ def upload_data(login_instance, config):
 
         ## write data to wikibase
         wbPage.write(login_instance)
+
+#def link_entitity():
+ 
+def main(metadata):
+    ## Create Bot and save credentials in .config.json
+    # WIP: Implement check if bot already exists:
+    create_bot()
+    config = Settings()
+
+    ## Connect to Wikibase Instance and login with credentials
+    wdi_config['MEDIAWIKI_API_URL'] = config.mediawiki_api_url
+    wdi_config['SPARQL_ENDPOINT_URL'] = config.sparql_endpoint_url
+    wdi_config['WIKIBASE_URL'] = config.wikibase_url
+    #The config dictionary can be used in WikibaseIntegrator for creating a login instance:
+    login_instance = wdi_login.WDLogin(user=config.username, pwd=config.password)
+
+    # login to wikibase
+    #login_instance = wdi_login.WDLogin(user=config.username, pwd=config.password, mediawiki_api_url=config.mediawiki_api_url)
+    upload_data(login_instance, config, metadata)   
 
 if __name__ == "__main__":
     ## Create Bot and save credentials in .config.json

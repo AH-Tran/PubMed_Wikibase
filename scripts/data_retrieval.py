@@ -161,6 +161,10 @@ def MeSHTermDF(queryterm):
     df['MeSHBrowserLink'] = 'https://meshb.nlm.nih.gov/record/ui?ui=' + df['MeSH Unique ID']
     return df
 
+def main():
+    result = dataaquisition('infectious diseases')
+    return result
+
 if __name__ == '__main__':
     result = dataaquisition('infectious diseases') # type list containing dicts as items
     #for i in result:

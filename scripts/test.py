@@ -22,11 +22,31 @@ def jsoninsert():
     with open('result1.json') as json_file:
         data1 = json.load(json_file)
         # Print the type of data variable
-        print("Type:", type(data0))
-        print(data0)
-    data0.update(data1)
-    with open('result_union.json', 'w') as fp:
-            json.dump(data0, fp, indent=4)
+    df1 = pd.DataFrame([data0])
+    df2 = pd.DataFrame([data1])
+
+    for key in data0:
+        if key in data1:
+            data0[key].update(data1[key])
+    
+    with open('result_union.json', 'w') as output_file:
+        json.dump(df1, output_file)
+    #MergeJson = pd.concat([df1, df2])
+    #MergeJson.to_json("result_union.json")  
+
+def merge_JsonFiles(filename):
+    result = list()
+    for f1 in filename:
+        with open(f1, 'r') as infile:
+            result.extend(json.load(infile))
+
+    with open('result_union.json', 'w') as output_file:
+        json.dump(result, output_file)
 
 if __name__ == '__main__':
     jsoninsert()
+
+    #files=['result0.json','result1.json']
+    #merge_JsonFiles(files)
+
+
