@@ -1,0 +1,277 @@
+{
+    "PubmedArticleSet": {
+        "PubmedArticle": {
+            "MedlineCitation": {
+                "@Owner": "NLM",
+                "@Status": "Publisher",
+                "Article": {
+                    "@PubModel": "Print-Electronic",
+                    "Abstract": {
+                        "AbstractText": [
+                            {
+                                "#text": "Utilizing maternity waiting homes (MWHs) is a strategy to improve access to skilled obstetric care in rural Zambia. However, out-of-pocket (OOP) expenses remain a barrier for many women. We assessed delivery-related expenditure for women who used MWHs and those who did not who delivered at a rural health facility.",
+                                "@Label": "BACKGROUND",
+                                "@NlmCategory": "BACKGROUND"
+                            },
+                            {
+                                "#text": "During the endline of an impact evaluation for an MWH intervention, household surveys (n = 826) were conducted with women who delivered a baby in the previous 13 months at a rural health facility and lived >10 km from a health facility in seven districts of rural Zambia. We captured the amount women reported spending on delivery. We compared OOP spending between women who used MWHs and those who did not. Amounts were converted from Zambian kwacha (ZMW) to US dollar (USD).",
+                                "@Label": "METHODS",
+                                "@NlmCategory": "METHODS"
+                            },
+                            {
+                                "#text": "After controlling for confounders, there was no significant difference in delivery-related expenditure between women who used MWHs (US$40.01) and those who did not (US$36.66) (=.06). Both groups reported baby clothes as the largest expenditure. MWH users reported spending slightly more on accommodation compared to those did not use MWHs, but this difference represents only a fraction of total costs associated with delivery.",
+                                "@Label": "RESULTS",
+                                "@NlmCategory": "RESULTS",
+                                "i": "P"
+                            },
+                            {
+                                "#text": "Findings suggest that for women coming from far away, utilizing MWHs while awaiting delivery is not costlier overall than for women who deliver at a health facility but do not utilize a MWH.",
+                                "@Label": "CONCLUSION",
+                                "@NlmCategory": "CONCLUSIONS"
+                            }
+                        ],
+                        "CopyrightInformation": "2021 The Author(s); Published by Kerman University of Medical Sciences. This is an open-access article distributed under the terms of the Creative Commons Attribution License (http://creativecommons.org/licenses/by/4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited."
+                    },
+                    "ArticleDate": {
+                        "@DateType": "Electronic",
+                        "Day": "23",
+                        "Month": "06",
+                        "Year": "2021"
+                    },
+                    "ArticleTitle": "Out-of-Pocket Expenditures for Delivery for Maternity Waiting Home Users and Non-users in Rural Zambia.",
+                    "AuthorList": {
+                        "@CompleteYN": "Y",
+                        "Author": [
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Constance P",
+                                "Initials": "CP",
+                                "LastName": "Fontanet"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Jeanette L",
+                                "Initials": "JL",
+                                "LastName": "Kaiser"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Rachel M",
+                                "Initials": "RM",
+                                "LastName": "Fong"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Thandiwe",
+                                "Initials": "T",
+                                "LastName": "Ngoma"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Jody R",
+                                "Initials": "JR",
+                                "LastName": "Lori"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Godfrey",
+                                "Initials": "G",
+                                "LastName": "Biemba"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Michelle",
+                                "Initials": "M",
+                                "LastName": "Munro-Kramer"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Isaac",
+                                "Initials": "I",
+                                "LastName": "Sakala"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Kathleen Lucile",
+                                "Initials": "KL",
+                                "LastName": "McGlasson"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Taryn",
+                                "Initials": "T",
+                                "LastName": "Vian"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Davidson H",
+                                "Initials": "DH",
+                                "LastName": "Hamer"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Peter C",
+                                "Initials": "PC",
+                                "LastName": "Rockers"
+                            },
+                            {
+                                "@ValidYN": "Y",
+                                "ForeName": "Nancy A",
+                                "Initials": "NA",
+                                "LastName": "Scott"
+                            }
+                        ]
+                    },
+                    "ELocationID": {
+                        "#text": "10.34172/ijhpm.2021.61",
+                        "@EIdType": "doi",
+                        "@ValidYN": "Y"
+                    },
+                    "Journal": {
+                        "ISOAbbreviation": "Int J Health Policy Manag",
+                        "ISSN": {
+                            "#text": "2322-5939",
+                            "@IssnType": "Electronic"
+                        },
+                        "JournalIssue": {
+                            "@CitedMedium": "Internet",
+                            "PubDate": {
+                                "Day": "23",
+                                "Month": "Jun",
+                                "Year": "2021"
+                            }
+                        },
+                        "Title": "International journal of health policy and management"
+                    },
+                    "Language": "eng",
+                    "PublicationTypeList": {
+                        "PublicationType": {
+                            "#text": "Journal Article",
+                            "@UI": "D016428"
+                        }
+                    }
+                },
+                "DateRevised": {
+                    "Day": "18",
+                    "Month": "07",
+                    "Year": "2021"
+                },
+                "KeywordList": {
+                    "@Owner": "NOTNLM"
+                },
+                "MedlineJournalInfo": {
+                    "Country": "Iran",
+                    "ISSNLinking": "2322-5939",
+                    "MedlineTA": "Int J Health Policy Manag",
+                    "NlmUniqueID": "101619905"
+                },
+                "MeshHeadingList": {
+                    "DescriptorName": [
+                        {
+                            "#text": "Costs and Cost Analysis",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D003365"
+                        },
+                        {
+                            "#text": "Phenylketonuria, Maternal",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D017042"
+                        },
+                        {
+                            "#text": "Maternal Age",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D008423"
+                        },
+                        {
+                            "#text": "RNA, Messenger, Stored",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D023121"
+                        },
+                        {
+                            "#text": "Maternal Death",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D063130"
+                        },
+                        {
+                            "#text": "Maternal Health",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D000068097"
+                        },
+                        {
+                            "#text": "Mothers",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D009035"
+                        },
+                        {
+                            "#text": "Midwifery",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D008880"
+                        },
+                        {
+                            "#text": "Health Expenditures",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D005102"
+                        },
+                        {
+                            "#text": "Delivery of Health Care",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D003695"
+                        },
+                        {
+                            "#text": "Delivery Rooms",
+                            "@MajorTopicYN": "N",
+                            "@UI": "D003696"
+                        }
+                    ]
+                },
+                "PMID": {
+                    "#text": "34273929",
+                    "@Version": "1"
+                }
+            },
+            "PubmedData": {
+                "History": {
+                    "PubMedPubDate": [
+                        {
+                            "@PubStatus": "received",
+                            "Day": "27",
+                            "Month": "08",
+                            "Year": "2020"
+                        },
+                        {
+                            "@PubStatus": "accepted",
+                            "Day": "30",
+                            "Month": "05",
+                            "Year": "2021"
+                        },
+                        {
+                            "@PubStatus": "entrez",
+                            "Day": "18",
+                            "Hour": "3",
+                            "Minute": "28",
+                            "Month": "7",
+                            "Year": "2021"
+                        },
+                        {
+                            "@PubStatus": "pubmed",
+                            "Day": "19",
+                            "Hour": "6",
+                            "Minute": "0",
+                            "Month": "7",
+                            "Year": "2021"
+                        },
+                        {
+                            "@PubStatus": "medline",
+                            "Day": "19",
+                            "Hour": "6",
+                            "Minute": "0",
+                            "Month": "7",
+                            "Year": "2021"
+                        }
+                    ]
+                },
+                "PublicationStatus": "aheadofprint"
+            }
+        }
+    }
+}

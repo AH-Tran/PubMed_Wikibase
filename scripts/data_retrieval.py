@@ -15,7 +15,7 @@ from scispacy.linking import EntityLinker
 #function to get a list of all jsondicts
 def IDacq(queryterm: str):
     baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&'
-    retmax = 100
+    retmax = 10
     database = "db=pubmed"
     query = ''
     advquery= queryterm.split()
@@ -104,7 +104,7 @@ def dataaquisition(queryterm):
             elif len(f) != 0:
                 print("ID " + str(ID) + " besitzt schon " + str(len(f)) + " MeshTerms")
             #List of all xml-Terms to drop INCLUDING THE ONES USED FOR MESHTERMGENERATION
-            xmlparents = ['.//DateCompleted/..','.//OtherAbstract/..','.//ArticleIdList/..','.//CitationSubset/..','.//AffiliationInfo/..','.//Identifier/..','.//CoiStatement/..','.//Abstract/..','.//Keyword/..']
+            xmlparents = ['.//DateCompleted/..','.//OtherAbstract/..','.//ArticleIdList/..','.//CitationSubset/..','.//Identifier/..','.//CoiStatement/..']
             for tags in xmlparents:
                 for parent in list(mdxml.iterfind(tags)):
                     for child in list(parent.iterfind(re.findall(pattern=r'\w+',string=tags)[0])):
@@ -115,11 +115,20 @@ def dataaquisition(queryterm):
             #with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),ID +'.json'),'w') as file:
             #    file.write(jsondict)
             #if you want to use a string for ongoing preprocessing or different tasks, uncomment next line, which turns the jsondict in stringformat into jsondict in dict format
-            jsondict = ast.literal_eval(jsondict)
+            try:
+                jsondict = ast.literal_eval(jsondict)
+            except ValueError:
+                continue
             dicts.append(jsondict)
     return dicts
 
 if __name__ == '__main__':
-    result = dataaquisition('infectious diseases')
-    print(len(result))
-    print(result)
+    result = dataaquisition('infectious diseases') # type: list containing dicts as items
+    #print("Type:")
+    #print(result[1])
+    #with open('result1.json', 'w') as fp:
+    #    json.dump(result[1], fp)
+    #print(len(result))
+    #print(result)
+    #with open('pubmed_data.json','w') as file:
+    #             file.write(result)

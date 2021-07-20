@@ -3,4 +3,7 @@ wikidataintegrator
 wikibaseintegrator
 pandas
 xmltodict
+spacy>=3.0.0,<4.0.0
+https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.4.0/en_core_sci_sm-0.4.0.tar.gz
+scispacy
 xml_to_df

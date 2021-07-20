@@ -197,7 +197,7 @@ if __name__ == "__main__":
 
     time0 = time.time()
 
-    #first_property_setup()
+    first_property_setup()
 
     # to make the KG production-ready, execute building_indexing() as well
     # or run in shell 'docker-compose down' and 'docker-compose up -d' again

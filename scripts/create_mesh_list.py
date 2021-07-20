@@ -5,17 +5,16 @@ nlp = spacy.load("en_core_sci_sm")
 import requests
 import xml.etree.ElementTree as ET
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
+#from selenium import webdriver
+#from selenium.webdriver.chrome.options import Options
+#from selenium.webdriver.common.by import By
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+#driver = webdriver.Chrome(executable_path=r"C:\webdriver\chromedriver.exe")
 
 def IDacq(queryterm: str):
-    nlp = spacy.load("en_core_sci_sm")
-    nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "mesh"})
     baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&'
-    retmax = 100000
+    retmax = 2
     database = "db=pubmed"
     query = ''
     advquery= queryterm.split()
@@ -49,6 +48,8 @@ def IDacq(queryterm: str):
     print(len(set(IDLIST)))
     return IDLIST
 def MeSHTermDF(queryterm):
+    nlp = spacy.load("en_core_sci_sm")
+    nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "mesh"})
     IDLIST = IDacq(queryterm=queryterm)
     for ID in IDLIST:
         print("Getting Article: " + ID)
@@ -79,29 +80,29 @@ def MeSHTermDF(queryterm):
     df = pd.DataFrame(dflist,columns=['MeSH Unique ID','MeSH Heading','ScopeNote'])
     df = df.drop_duplicates(subset=['MeSH Unique ID'])
     df['MeSHBrowserLink'] = 'https://meshb.nlm.nih.gov/record/ui?ui=' + df['MeSH Unique ID']
-    TNlist = []
-    options = Options()
-    options.headless = True
-    options.add_argument('--disable-infobars')
-    options.add_argument('--disable-extensions')
-    options.add_argument('--profile-directory=Default')
-    options.add_argument('--incognito')
-    options.add_argument('--disable-plugins-discovery')
-    for i in df['MeSHBrowserLink']:
-        driver = webdriver.Chrome('C:/webdriver/chromedriver.exe', chrome_options=options)
-        print("Opening Website: "+ i)
-        driver.get(i)
-        element = driver.find_elements_by_xpath('//a[contains(@id,"treeNumber")]')
-        elementlist = []
-        for i in element:
-            elementlist.append(i.text)
-        print(elementlist)
-        TNlist.append(elementlist)
-    df['TreeNumbers'] = TNlist
+    #TNlist = []
+    #options = Options()
+    #options.headless = True
+    #options.add_argument('--disable-infobars')
+    #options.add_argument('--disable-extensions')
+    #options.add_argument('--profile-directory=Default')
+    #options.add_argument('--incognito')
+    #options.add_argument('--disable-plugins-discovery')
+    #for i in df['MeSHBrowserLink']:
+    #    driver = webdriver.Chrome('C:/webdriver/chromedriver.exe', chrome_options=options)
+    #    print("Opening Website: "+ i)
+    #    driver.get(i)
+    #    element = driver.find_elements_by_xpath('//a[contains(@id,"treeNumber")]')
+    #    elementlist = []
+    #    for i in element:
+    #        elementlist.append(i.text)
+    #    print(elementlist)
+    #    TNlist.append(elementlist)
+    #df['TreeNumbers'] = TNlist
     return df
 
 if __name__ == '__main__':
     df = MeSHTermDF(queryterm="infectious diseases")
     #one can save the dataframe in csv or xlsx or whatever
-    name = 'MeSHTermList.csv'
+    name = 'MzSHTermList_second.csv'
     df.to_csv(name)
