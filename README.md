@@ -6,6 +6,7 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 * Scripts tested in a Windows system within a Ubuntu 20.04 terminal with Python 3.9.2
 
 ## Table of contents
+- [Overview](#overview)
 - [How to use](#how-to-use)
   * [Installation](#installation)
   * [Customizing Wikibase](#customizing-wikibase)
@@ -17,6 +18,10 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 - [Sources](#sources)
 - [Acknowledgments](#acknowledgments)
 - [Further Research ](#further-research)
+
+## Overview
+A Repository that specializes itself in creating a fresh Wikibase instance filled with relevant PubMed metadata and MeSH Headings from the NLM Database.
+![image info](./doc/overview.PNG)
 
 ## How to use
 
@@ -132,6 +137,7 @@ docker-compose up --no-deps -d wikibase
 - Document new encountered Limits
 - IR/NLP metrics on Abstracts
 - MeSH Tree Hierarchy as Knowledge Graph Structure
+- Accuracy on Enrichening Process
 ## TODO for Documentation
 - Pipeline Overview
 - Knowledge Graph Structure with example Screenshots
