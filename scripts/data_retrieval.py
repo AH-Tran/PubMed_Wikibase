@@ -167,5 +167,9 @@ def dataaquisition(queryterm):
     df.to_csv('meshtermlist.csv')
     return dicts
 
+def main(queryterm):
+    result = dataaquisition(queryterm)
+    return result
+
 if __name__ == '__main__':
-    result = dataaquisition('infectious diseases')
+    main('infectious diseases')
