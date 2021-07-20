@@ -2,7 +2,7 @@
 Automated creation and filling of a new wikibase instance with PubMed metadata and MeSH terms.
 ```
 * Automated inserts into a fresh Raise-Wikibase instance
-* Scripts for automated property and item creation given a csv
+* Scripts for automated property and item creation given a queryterm
 * Scripts tested in a Windows system within a Ubuntu 20.04 terminal with Python 3.9.2
 
 ## Table of contents
