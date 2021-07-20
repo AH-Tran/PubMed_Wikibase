@@ -103,9 +103,9 @@ def wikibase_login():
 >Automatically allows the user to create user-defined properties in the Wikibase instance. Allows you to both extract **properties directly from WikiData** and create **custom properties**:  
 >[create_properties.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_properties.py)
 ```python
- # Extract Properties from WD(WikiData) and insert them into the Wikibase instance
- p1 = property_wd('P932') #PBMCID
- p2 = property_wd('P698') #pubmed id
+# Extract Properties from WD(WikiData) and insert them into the Wikibase instance
+p1 = property_wd('P932') #PBMCID
+p2 = property_wd('P698') #pubmed id
 batch('wikibase-property', [p1, p2])
 
 #Create custom MeSH relevant properties
