@@ -18,15 +18,26 @@ import time
 
 #function to get a list of all jsondicts
 def IDacq(queryterm: str):
+    """creates a List of all the Article-IDs based on the Queryterm
+
+    Args:
+        queryterm (str): String to search in Pubmed
+
+    Returns:
+        list: list of all IDs as a String
+    """
+    #Constants
     baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&'
     retmax = 1000
     database = "db=pubmed"
+    #process the query to not have spaces but "+"
     query = ''
     advquery= queryterm.split()
     for i in advquery:
         query+=i
         query+="+"
     query = "term=" + query[:-1]
+    #create the url to get the Article IDs
     url = baseurl + database + "&" + query + "&" + "retmax=" + str(retmax)
 
     #request IDs for searchterms and apply XML syntax
@@ -40,6 +51,7 @@ def IDacq(queryterm: str):
     ids = idxml.findall("IdList/Id")
     for i in ids:
         IDLIST.append(str(i.text))
+    #To get all the Article IDs, we check, if we the total number of IDs and if so, get the next Article IDs
     while len(IDLIST)%100000==0:
         retstart = len(IDLIST)
         print("Ziehen der nächsten " + str(retmax) + " IDs")
@@ -52,6 +64,7 @@ def IDacq(queryterm: str):
     print("Endgültige Länge der IDliste: ")
     print(str(len(IDLIST)))
     print("Unique-Term Counts: ")
+    #make the IDs Unique
     print(len(set(IDLIST)))
     return IDLIST
 
@@ -63,18 +76,25 @@ def dataaquisition(queryterm):
     Returns:
         list of dict: list of dictionaries we can iterate after with the other function to upload them to the wikibase
     """
+    #Load the spacy module to create the meshterms
     nlp = spacy.load("en_core_sci_sm")
     nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "mesh"})
+    #Get the list of all IDs
     IDLIST = IDacq(queryterm)
     dicts = []
     dflist = []
     timelist = []
+    #Iterate over the IDLIST
     for ID in IDLIST:
         start = time.time()
+        #Get the Article of the ID
         mdrequest = requests.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&db=pubmed&id=" + ID + "&retmode=xml")
         mdxml = ET.fromstring(mdrequest.text)
+        #check if the Article is empty
         if len([a.tag for a in mdxml.iter()])>1:
+            #check for Mesh-Terms
             f = mdxml.findall("*//MeshHeading/DescriptorName")
+            #if there are Mesh-Terms, get additional information
             if len(f) != 0:
                 for i in f:
                     doc = nlp(i.text)
@@ -86,7 +106,9 @@ def dataaquisition(queryterm):
                             name = meshinfo[1]
                             c = [meshinfo[i] for i in [0,1,4]]
                             dflist.append(c)
+            #if there are no Mesh-Terms, create the Meshterms
             elif len(f) == 0:
+                #get the Keywords and the Title to create Meshterms
                 abstracts = ['.//Keyword','.//ArticleTitle']
                 abstract = ""
                 for tag in abstracts:
@@ -97,6 +119,7 @@ def dataaquisition(queryterm):
                 linker = nlp.get_pipe("scispacy_linker")
                 entity = doc.ents
                 parent = mdxml.find('.//MedlineCitation')
+                #check where to put the Mesh-Terms
                 if parent is None:
                     if mdxml.find('.//PubmedArticle') is None:
                         parent = SubElement(SubElement(mdxml,'PubmedArticle'),'MedlineCitation')
@@ -108,8 +131,10 @@ def dataaquisition(queryterm):
                         meshinfo = linker.kb.cui_to_entity[mesh_ent[0]]
                         Descriptor = meshinfo[0]
                         name = meshinfo[1]
+                        #create XML with the Mesh-Terms
                         child = XML('<MeshHeading><DescriptorName UI="'+Descriptor+'" MajorTopicYN="N">'+name+'</DescriptorName></MeshHeading>')
                         children.extend(child)
+                        #append the information to the list to create the meshtermlist later
                         c = [meshinfo[i] for i in [0,1,4]]
                         dflist.append(c)
             #List of all xml-Terms to drop INCLUDING THE ONES USED FOR MESHTERMGENERATION
@@ -133,10 +158,8 @@ def dataaquisition(queryterm):
             if IDLIST.index(ID)%10==0:
                 print("Download des Artikels:",str(IDLIST.index(ID)+1)+"/"+str(len(IDLIST)),"Est. time left:",time.strftime('%M:%S',time.gmtime(int(sum(timelist)/len(timelist)*(len(IDLIST)-IDLIST.index(ID))))),"Min")
         
-    print(len(dflist))
     df = pd.DataFrame(dflist,columns=['MeSH Unique ID','MeSH Heading','ScopeNote'])
     df = df.drop_duplicates(subset=['MeSH Unique ID'])
-    print(len(df))
     df['MeSHBrowserLink'] = 'https://meshb.nlm.nih.gov/record/ui?ui=' + df['MeSH Unique ID']
     TNlist = []
     options = Options()
@@ -152,7 +175,7 @@ def dataaquisition(queryterm):
     for i in urllist:
         n = i
         start = time.time()
-        driver = webdriver.Chrome('D:/chromedriver.exe', chrome_options=options)
+        driver = webdriver.Chrome(chrome_options=options)
         driver.get(i)
         time.sleep(3)
         element = driver.find_elements_by_xpath('//a[contains(@id,"treeNumber_")]')
