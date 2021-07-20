@@ -149,7 +149,7 @@ def upload_data(login_instance, config):
         wbPage.write(login_instance)
 ```
 
-### Useful Docker Commands
+## Useful Docker Commands
 > Following Docker Commands can be of use when customizing and editing the Wikibase instance.
 ```
 ### Stop Wikibase Docker
