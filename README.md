@@ -1,7 +1,7 @@
 ```
 Automated creation and filling of a new wikibase instance with PubMed metadata and MeSH terms.
 ```
-* Automated inserts into a fresh Raise-Wikibase instance
+* Automated inserts into a fresh [Raise-Wikibase](https://github.com/UB-Mannheim/RaiseWikibase) instance
 * Scripts for automated property and item creation given a queryterm
 * Scripts tested in a Windows system within a Ubuntu 20.04 terminal with Python 3.9.2
 
@@ -100,16 +100,20 @@ def wikibase_login():
 ```
 
 ### Creating Properties
->Automatically allows the user to create user-defined properties in the Wikibase instance:  
+>Automatically allows the user to create user-defined properties in the Wikibase instance. Allows you to both extract **properties directly from WikiData** and create **custom properties**:  
 >[create_properties.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_properties.py)
 ```python
-#Create MeSH relevant properties
-pmesh1 = property_wd('P672') #MeSH tree code
-pmesh2 = property_wd('P6694') #MeSH concept ID
-pmesh3 = property_wd('P9341') #MeSH qualifier ID 
-pmesh4 = property_wd('P486') #MeSH descriptor ID
-#pmesh5 = property_wd('') #MeSH Headings
-batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
+ # Extract Properties from WD(WikiData) and insert them into the Wikibase instance
+ p1 = property_wd('P932') #PBMCID
+ p2 = property_wd('P698') #pubmed id
+batch('wikibase-property', [p1, p2])
+
+#Create custom MeSH relevant properties
+p27 = create_property('MeSH Heading', ['Heading'], 'Label of the MeSH descriptor ID', 'string')
+p28 = create_property('ScopeNote', ['Note'], 'Note describing further the Label of a MeSH Heading', 'string')
+p29 = create_property('MeshBrowserLink', ['Mesh URL', 'MeSH Browser'], 'MeSH Browser URL of a specific Mesh Heading', 'url')
+p30 = create_property('MeSH Treecode', ['Tree', 'MeSH Tree'], 'MeSH Tree Code of a specific Mesh Heading', 'string')
+batch('wikibase-property', [p27, p28, p29, p30])
 ```
 ### Data Retrieval
 >Description Here, Data Retrieval from PubMed, Enrichment with SciSpacy:  
@@ -195,6 +199,7 @@ docker-compose up --no-deps -d wikibase
 - [PubMed](https://pubmed.ncbi.nlm.nih.gov/)
 - [MeSH Browser](https://meshb.nlm.nih.gov/search)
 - [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page)
+- [Raise-Wikibase](https://github.com/UB-Mannheim/RaiseWikibase)
 
 ## Acknowledgements
 
