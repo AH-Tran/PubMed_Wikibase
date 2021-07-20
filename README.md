@@ -10,10 +10,12 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 - [How to use](#how-to-use)
   * [Installation](#installation)
   * [Customizing Wikibase](#customizing-wikibase)
+- [Important Scripts](#important-scripts)
   * [Creating Properties](#creating-properties)
-  * [Creating Items](#creating-items)
-  * [Updating Item Connection](#updating-item-connection)
-  * [Useful Docker Commands](#useful-docker-commands)
+  * [Data Retrieval](#data-retrieval)
+  * [Creating MeSH Items](#creating-mesh-items)
+  * [Creating PubMed Items](#creating-pubmed-items)
+- [Useful Docker Commands](#useful-docker-commands)
   * [Creating Backups](#creating-backups)
 - [Sources](#sources)
 - [Acknowledgments](#acknowledgments)
@@ -57,9 +59,30 @@ pip3 install -r requirements.txt
         'tidyConfigFile' => "${DOLLAR}IP/includes/tidy/tidy.conf",
     ];
 ```
+## Important Scripts
+
+### Systems.py
+>Mainscript that executes all important scripts to sucessfully fill the Wikibase instance:  
+>[systems.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_properties.py)
+```python
+#Import Main Scripts
+import create_properties 
+import data_retrieval
+import create_mesh_items
+import create_items_wd
+
+retmaximum = 10
+queryterm ='infectious diseases'
+
+# Execute scripts
+create_properties.first_property_setup() # works
+metadata = data_retrieval.main(retmaximum, queryterm)
+create_mesh_items.main('meshtermlist
+```
 
 ### Creating Properties
-create_properties.py
+>Automatically allows the user to create user-defined properties in the Wikibase instance:  
+>[create_properties.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_properties.py)
 ```python
 #Create MeSH relevant properties
 pmesh1 = property_wd('P672') #MeSH tree code
@@ -69,8 +92,16 @@ pmesh4 = property_wd('P486') #MeSH descriptor ID
 #pmesh5 = property_wd('') #MeSH Headings
 batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
 ```
-### Creating Items
-create_items_wd.py
+### Data Retrieval
+>Description Here, Data Retrieval from PubMed, Enrichment with SciSpacy: 
+>[data_retrieval.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/data_retrieval.py)
+```python
+
+```
+
+### Creating MeSH Items
+>Automatically creates MeSH items with retrieved metadata: 
+>[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items.py)
 ```python
 def upload_data(login_instance, config):
     # load excel table to load into Wikibase
@@ -92,9 +123,34 @@ def upload_data(login_instance, config):
         ## write data to wikibase
         wbPage.write(login_instance)
 ```
-### Updating Item Connection
-update_statements.py
+
+### Creating PubMed Items
+>Automatically creates PubMed article items with retrieved metadata: 
+>[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_items_wd.py)
+```python
+def upload_data(login_instance, config):
+    # load excel table to load into Wikibase
+    mydata = pd.read_csv("pubmed_data.csv")
+    for index, row in mydata.iterrows():
+        ## Prepare the statements to be added
+        item_statements = [] # all statements for one item
+        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], prop_nr="P11")) #title 
+        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_AuthorList_Author_LastName'], prop_nr="P12")) #author
+
+        ## instantiate the Wikibase page, add statements, labels and descriptions
+        wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
+        wbPage.set_label(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], lang="en")
+        wbPage.set_description("Article retrieved from PubMed", lang="en")
+
+        ## sanity check (debug)
+        pprint.pprint(wbPage.get_wd_json_representation())
+
+        ## write data to wikibase
+        wbPage.write(login_instance)
+```
+
 ### Useful Docker Commands
+> Following Docker Commands can be of use when customizing and editing the Wikibase instance.
 ```
 ### Stop Wikibase Docker
 docker-compose down
@@ -106,6 +162,7 @@ docker-compose up --no-deps -d wikibase
 ```
 
 ### Creating Backups
+> Volume Backups can bve made through these commands.
 ```
 - Take snapshots of: docker-compose file, mounted files
 ### Volume backup
@@ -113,18 +170,11 @@ docker-compose up --no-deps -d wikibase
 - docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
 - docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
 ```
-## Current Script Usage
-1. General Wikibase Setup [o]
-2. create_properties.py [o]
-3. data_retrieval.py [x]
-    - desired output: pubmed_data.xml or pubmed_data.csv 
-                    - mesh_data.csv
-4. create_mesh_items.py [x]
-5. create_items_wd.py [o]
 
 ## Sources
-- PubMed
-- Wikidata
+- [PubMed](https://pubmed.ncbi.nlm.nih.gov/)
+- [MeSH Browser](https://meshb.nlm.nih.gov/search)
+- [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page)
 
 ## Acknowledgements
 
@@ -139,7 +189,6 @@ docker-compose up --no-deps -d wikibase
 - MeSH Tree Hierarchy as Knowledge Graph Structure
 - Accuracy on Enrichening Process
 ## TODO for Documentation
-- Pipeline Overview
 - Knowledge Graph Structure with example Screenshots
 - Data Retrieval Examples
 - MeSH Examples
