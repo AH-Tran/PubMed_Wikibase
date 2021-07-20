@@ -11,6 +11,8 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
   * [Installation](#installation)
   * [Customizing Wikibase](#customizing-wikibase)
 - [Important Scripts](#important-scripts)
+  * [Systems.py](#systems.py)
+  * [Wikibase Log-in](#wikibase-log-in)
   * [Creating Properties](#creating-properties)
   * [Data Retrieval](#data-retrieval)
   * [Creating MeSH Items](#creating-mesh-items)
@@ -80,6 +82,22 @@ metadata = data_retrieval.main(retmaximum, queryterm)
 create_mesh_items.main('meshtermlist.csv')
 create_items_wd.main(metadata)
 ```
+### Wikibase Log-in
+>Creates a Bot, saves the credentials in config.json and uses those credentials to log into the Wikibase Instance
+```python
+def wikibase_login():
+    ## Create Bot and save credentials in .config.json
+    create_bot()
+    config = Settings()
+
+    ## Connect to Wikibase Instance and login with credentials
+    wdi_config['MEDIAWIKI_API_URL'] = config.mediawiki_api_url
+    wdi_config['SPARQL_ENDPOINT_URL'] = config.sparql_endpoint_url
+    wdi_config['WIKIBASE_URL'] = config.wikibase_url
+    
+    #The config dictionary can be used in WikibaseIntegrator for creating a login instance:
+    login_instance = wdi_login.WDLogin(user=config.username, pwd=config.password)
+```
 
 ### Creating Properties
 >Automatically allows the user to create user-defined properties in the Wikibase instance:  
@@ -104,19 +122,20 @@ batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
 >Automatically creates MeSH items with retrieved metadata:  
 >[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items.py)
 ```python
-def upload_data(login_instance, config):
-    # load excel table to load into Wikibase
-    mydata = pd.read_csv("pubmed_data.csv")
+def upload_data(login_instance, config, meshtermlist):
+    # Load excel table to load into Wikibase
+    mydata = pd.read_csv(meshtermlist)
     for index, row in mydata.iterrows():
         ## Prepare the statements to be added
         item_statements = [] # all statements for one item
-        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], prop_nr="P11")) #title 
-        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_AuthorList_Author_LastName'], prop_nr="P12")) #author
+        item_statements.append(wdi_core.WDString(mydata.loc[index].at['MeSH Unique ID'], prop_nr="P26")) #MeSH Unique ID 
+        item_statements.append(wdi_core.WDString(mydata.loc[index].at['MeSH Heading'], prop_nr="P27")) #MeSH Heading 
+        item_statements.append(wdi_core.WDUrl(mydata.loc[index].at['MeSHBrowserLink'], prop_nr="P29")) #MeSH URL
 
         ## instantiate the Wikibase page, add statements, labels and descriptions
         wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
-        wbPage.set_label(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], lang="en")
-        wbPage.set_description("Article retrieved from PubMed", lang="en")
+        wbPage.set_label(mydata.loc[index].at['MeSH Heading'], lang="en")
+        wbPage.set_description("MeSH Entity extracted from NLM", lang="en")
 
         ## sanity check (debug)
         pprint.pprint(wbPage.get_wd_json_representation())
