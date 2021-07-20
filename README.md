@@ -94,14 +94,14 @@ pmesh4 = property_wd('P486') #MeSH descriptor ID
 batch('wikibase-property', [pmesh1, pmesh2, pmesh3, pmesh4])
 ```
 ### Data Retrieval
->Description Here, Data Retrieval from PubMed, Enrichment with SciSpacy: 
+>Description Here, Data Retrieval from PubMed, Enrichment with SciSpacy:  
 >[data_retrieval.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/data_retrieval.py)
 ```python
 
 ```
 
 ### Creating MeSH Items
->Automatically creates MeSH items with retrieved metadata: 
+>Automatically creates MeSH items with retrieved metadata:  
 >[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items.py)
 ```python
 def upload_data(login_instance, config):
@@ -126,7 +126,7 @@ def upload_data(login_instance, config):
 ```
 
 ### Creating PubMed Items
->Automatically creates PubMed article items with retrieved metadata: 
+>Automatically creates PubMed article items with retrieved metadata:  
 >[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_items_wd.py)
 ```python
 def upload_data(login_instance, config):
