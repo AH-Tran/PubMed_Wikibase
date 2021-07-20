@@ -11,11 +11,15 @@ from wikibaseintegrator import wbi_core, wbi_login
 import spacy
 import scispacy
 from scispacy.linking import EntityLinker
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
 
 #function to get a list of all jsondicts
 def IDacq(queryterm: str):
     baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&'
-    retmax = 100
+    retmax = 1000
     database = "db=pubmed"
     query = ''
     advquery= queryterm.split()
@@ -36,17 +40,15 @@ def IDacq(queryterm: str):
     ids = idxml.findall("IdList/Id")
     for i in ids:
         IDLIST.append(str(i.text))
-    """
     while len(IDLIST)%100000==0:
         retstart = len(IDLIST)
-        print("Ziehen der nächsten " + str(retstart) + " IDs)
+        print("Ziehen der nächsten " + str(retmax) + " IDs")
         idrequest = requests.get(url+"&retstart=" + str(retstart))
         print("Download fertig!")
         idxml = ET.fromstring(idrequest.text)
         ids = idxml.findall("IdList/Id")
         for i in ids:
             IDLIST.append(str(i.text))
-    """
     print("Endgültige Länge der IDliste: ")
     print(str(len(IDLIST)))
     print("Unique-Term Counts: ")
@@ -55,7 +57,7 @@ def IDacq(queryterm: str):
 
 def dataaquisition(queryterm):
     """
-    generates a list of all dictionaries with the metadata information
+    generates a list of all dictionaries with the metadata information and a list of all MeshTerms used.
     Args:
         queryterm (str): simple queryterm we search for
     Returns:
@@ -65,15 +67,26 @@ def dataaquisition(queryterm):
     nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "mesh"})
     IDLIST = IDacq(queryterm)
     dicts = []
+    dflist = []
+    timelist = []
     for ID in IDLIST:
-        print("Download des Artikels: " + str(ID))
+        start = time.time()
         mdrequest = requests.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&db=pubmed&id=" + ID + "&retmode=xml")
-        print("Download fertig!")
         mdxml = ET.fromstring(mdrequest.text)
         if len([a.tag for a in mdxml.iter()])>1:
             f = mdxml.findall("*//MeshHeading/DescriptorName")
-            if len(f) == 0:
-                print("Keine MeshTerms vorhanden")
+            if len(f) != 0:
+                for i in f:
+                    doc = nlp(i.text)
+                    entity = doc.ents
+                    for i in entity:
+                        for mesh_ent in i._.kb_ents:
+                            meshinfo = linker.kb.cui_to_entity[mesh_ent[0]]
+                            Descriptor = meshinfo[0]
+                            name = meshinfo[1]
+                            c = [meshinfo[i] for i in [0,1,4]]
+                            dflist.append(c)
+            elif len(f) == 0:
                 abstracts = ['.//Keyword','.//ArticleTitle']
                 abstract = ""
                 for tag in abstracts:
@@ -89,8 +102,6 @@ def dataaquisition(queryterm):
                         parent = SubElement(SubElement(mdxml,'PubmedArticle'),'MedlineCitation')
                     else:
                         parent = SubElement(mdxml.find('.//PubmedArticle'),'MedlineCitation')
-                else:
-                    print(parent)
                 children = SubElement(parent,'MeshHeadingList')
                 for i in entity:
                     for mesh_ent in i._.kb_ents:
@@ -99,27 +110,63 @@ def dataaquisition(queryterm):
                         name = meshinfo[1]
                         child = XML('<MeshHeading><DescriptorName UI="'+Descriptor+'" MajorTopicYN="N">'+name+'</DescriptorName></MeshHeading>')
                         children.extend(child)
-                        print("Name: ",name,type(name))
-                print("ID " + ID + " besitzt jetzt MeshTerms: ",len([elem.tag for elem in parent.iter(tag="DescriptorName")]))
-            elif len(f) != 0:
-                print("ID " + str(ID) + " besitzt schon " + str(len(f)) + " MeshTerms")
+                        c = [meshinfo[i] for i in [0,1,4]]
+                        dflist.append(c)
             #List of all xml-Terms to drop INCLUDING THE ONES USED FOR MESHTERMGENERATION
             xmlparents = ['.//DateCompleted/..','.//OtherAbstract/..','.//ArticleIdList/..','.//CitationSubset/..','.//AffiliationInfo/..','.//Identifier/..','.//CoiStatement/..','.//Abstract/..','.//Keyword/..']
             for tags in xmlparents:
                 for parent in list(mdxml.iterfind(tags)):
                     for child in list(parent.iterfind(re.findall(pattern=r'\w+',string=tags)[0])):
                         parent.remove(child)
-            #print(ET.tostring(mdxml))
             jsondict = json.dumps(xmltodict.parse(ET.tostring(mdxml)),indent=4,sort_keys=True,ensure_ascii=False)
-            #If you want to write into a file, uncomment next two lines
+            #If you want to write the json into files, uncomment next two lines
             #with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),ID +'.json'),'w') as file:
             #    file.write(jsondict)
             #if you want to use a string for ongoing preprocessing or different tasks, uncomment next line, which turns the jsondict in stringformat into jsondict in dict format
-            jsondict = ast.literal_eval(jsondict)
+            try:
+                jsondict = ast.literal_eval(jsondict)
+            except ValueError:
+                continue
             dicts.append(jsondict)
-    return dicts
+            end = time.time()
+            timelist.append(end-start)
+            if IDLIST.index(ID)%10==0:
+                print("Download des Artikels:",str(IDLIST.index(ID)+1)+"/"+str(len(IDLIST)),"Est. time left:",time.strftime('%M:%S',time.gmtime(int(sum(timelist)/len(timelist)*(len(IDLIST)-IDLIST.index(ID))))),"Min")
+        
+    print(len(dflist))
+    df = pd.DataFrame(dflist,columns=['MeSH Unique ID','MeSH Heading','ScopeNote'])
+    df = df.drop_duplicates(subset=['MeSH Unique ID'])
+    print(len(df))
+    df['MeSHBrowserLink'] = 'https://meshb.nlm.nih.gov/record/ui?ui=' + df['MeSH Unique ID']
+    TNlist = []
+    options = Options()
+    options.headless = True
+    options.add_argument('--disable-infobars')
+    options.add_argument('--disable-extensions')
+    options.add_argument('--profile-directory=Default')
+    options.add_argument('--incognito')
+    options.add_argument('--disable-plugins-discovery')
+    options.add_argument('log-level=3')
+    timelist = []
+    urllist = df['MeSHBrowserLink'].tolist()
+    for i in urllist:
+        n = i
+        start = time.time()
+        driver = webdriver.Chrome('D:/chromedriver.exe', chrome_options=options)
+        driver.get(i)
+        time.sleep(3)
+        element = driver.find_elements_by_xpath('//a[contains(@id,"treeNumber_")]')
+        elementlist = []
+        for i in element:
+            elementlist.append(i.text)
+        TNlist.append(elementlist)
+        end = time.time()
+        timelist.append(end-start)
+        print("MeSHTerm:",str(urllist.index(n)+1)+"/"+str(len(urllist)),"Est. time left:",time.strftime('%H:%M:%S',time.gmtime(int(sum(timelist)/len(timelist)*(len(urllist)-urllist.index(n))))),"Hours")
+    df['TreeNumbers'] = TNlist
+    return df,dicts
 
 if __name__ == '__main__':
-    result = dataaquisition('infectious diseases')
+    df,result = dataaquisition('infectious diseases')
     print(len(result))
-    print(result)
+    print(len(df))
