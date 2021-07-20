@@ -75,9 +75,10 @@ retmaximum = 10
 queryterm ='infectious diseases'
 
 # Execute scripts
-create_properties.first_property_setup() # works
+create_properties.first_property_setup()
 metadata = data_retrieval.main(retmaximum, queryterm)
-create_mesh_items.main('meshtermlist
+create_mesh_items.main('meshtermlist.csv')
+create_items_wd.main(metadata)
 ```
 
 ### Creating Properties
