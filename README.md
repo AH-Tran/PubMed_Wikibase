@@ -71,8 +71,10 @@ On Windows
 ```shell
 .\venv\Scripts\activate
 ```
-**Requirements.txt**
->pip3 install -r requirements.txt
+**Requirements.txt**  
+```
+pip3 install -r requirements.txt
+```
 
 **Further Instructions**
 > Raise Wikibase as further reference : [https://github.com/UB-Mannheim/RaiseWikibase](https://github.com/UB-Mannheim/RaiseWikibase)
