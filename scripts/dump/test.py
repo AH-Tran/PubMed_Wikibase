@@ -1,27 +1,72 @@
-from RaiseWikibase.raiser import batch
-from RaiseWikibase.datamodel import claim, snak
-import requests
+import json
+import pandas as pd
 
-def get_wd_entity(wid=''):
-    """Returns JSON representation of a Wikidata entity for the given WID"""
-    # Remove the following keys to avoid a problem with a new Wikibase instance
-    remove_keys = ['lastrevid', 'pageid', 'modified', 'title', 'ns']
-    try:
-        r = requests.get('https://www.wikidata.org/entity/' + wid + '.json')
-        entity = r.json().get('entities').get(wid)
-        for key in remove_keys:
-            entity.pop(key)
-        entity['claims'] = claim(prop='P1',
-                                 mainsnak=snak(datatype='external-id',
-                                               value=wid,
-                                               prop='P1',
-                                               snaktype='value'),
-                                 qualifiers=[],
-                                 references=[])
-    except Exception:
-        entity = None
-    return entity
+def safeget(dct, *keys):
+    for key in keys:
+        try:
+            dct = dct[key]
+        except KeyError:
+            return None
+    return dct
 
-wids = ['Q5', 'Q43229', 'Q17334923'] # human, organization, location
-items = [get_wd_entity(wid) for wid in wids]
-batch('wikibase-item', items)
+def jsoninsert():
+    # Opening JSON file
+    with open('result0.json') as json_file:
+        data0 = json.load(json_file)
+    with open('result1.json') as json_file:
+        data1 = json.load(json_file)
+
+    #safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article')
+    title = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleTitle')
+    date = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Day') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Month') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Year')
+    author_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'AuthorList', 'Author')
+    for a in author_list:
+       safeget(a, 'LastName')+ ',' + safeget(a, 'ForeName')
+    language = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Language')
+    publication_type = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'PublicationTypeList', 'PublicationType', '#text') #try except
+    journal_title = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'Title')#
+    journal_issn = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'ISSN', '#text')#
+    journal_date = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Day') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Month') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Year')#
+    NLM_ID = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MedlineJournalInfo', 'NlmUniqueID')#
+    PMID = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'PMID', '#text')
+
+    mesh_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
+    for m in mesh_list:
+        safeget(m, '@UI')
+    
+    print(author_list)
+
+def csv_search():
+    df = pd.read_csv('meshtermlist.csv')
+    
+    with open('result0.json') as json_file:
+        data0 = json.load(json_file)
+
+    #r =df.loc[df['MeSH Unique ID'] == 'D005208']
+    #r2 = int(r.index.values)
+    #print(r2)
+    
+    r= df[df['MeSH Unique ID'] == 'D015431'].index[0]
+    #rint(type(r))
+    #print(r)
+    #r= df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0]
+    #print(r+1)
+    #search for D016267 (external fixators)   
+    
+    #mesh_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
+    #for m in mesh_list:
+    #    r = safeget(m, '@UI')
+    #    print(r)
+    #    if ( df[df['MeSH Unique ID'] == r].index[0] ):
+    #        print('safe')
+
+    print('http://localhost:8181/wiki/Item:'+ 'Q' + str(r))
+
+if __name__ == '__main__':
+    #jsoninsert()
+    csv_search()
+
