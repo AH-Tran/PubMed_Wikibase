@@ -247,13 +247,11 @@ docker-compose up -d
 
 
 ### Creating Backups
-> Volume Backups can bve made through these commands.
+> Volume backups and snapshots can be made through these commands.
 ```
-- Take snapshots of: docker-compose file, mounted files
-### Volume backup
-- docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
-- docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
-- docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
+docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
+docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
+docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
 ```
 
 ## Sources
@@ -265,16 +263,12 @@ docker-compose up -d
 ## Acknowledgements
 
 ## Further Research
+Following Issues and possible points of further research interest have been identified
 - Dynamically Adapt Property Creation with CSV 
-- Support for different formats than CSV
-- Extract MeSH Entities from Wikidata
+- Extract MeSH Entities directly from Wikidata
 - Enter Wikibase into Wikibase Registry
-- Authenticate Author Entity with either Scholia or 
-- Document new encountered Limits
-- IR/NLP metrics on Abstracts
-- MeSH Tree Hierarchy as Knowledge Graph Structure
-- Accuracy on Enrichening Process
-## TODO for Documentation
-- Knowledge Graph Structure with example Screenshots
-- Data Retrieval Examples
-- MeSH Examples
+- Authenticate Author Entities with external databases such as Scholia
+- Calculate IR/NLP metrics on Abstracts
+- Implement [MeSH Tree Hierarchy](https://www.ncbi.nlm.nih.gov/mesh/68003141) as Knowledge Graph Structure
+- Complement Knowledge Graph Structure with semantic connection between articles, author entities and affiliation entities
+- Measure Accuracy on MeSH Term Enrichening Process in [data_retrieval.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/data_retrieval.py
