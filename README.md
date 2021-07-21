@@ -275,7 +275,7 @@ Inspecting the Performance, we see a linear growth of time taken per Article Vol
 - [Raise-Wikibase](https://github.com/UB-Mannheim/RaiseWikibase)
 
 ## Acknowledgements
-Many thanks to [UB-Mannheim](https://github.com/UB-Mannheim/RaiseWikibase) for providing the Raise Wikibase Repository, [Adam Shorland](https://addshore.com/) for providing many resources when it comes to building and customizing Wikibase instances, and our professores for the continued guidance.
+Many thanks to [UB-Mannheim](https://github.com/UB-Mannheim/RaiseWikibase) for providing the Raise Wikibase Repository, [Adam Shorland](https://addshore.com/) for providing many resources when it comes to building and customizing Wikibase instances, and Konrad Förstner and Eva Seidlmayer for the continued guidance throughout the course.
 ## Further Research
 Following Issues and possible points of further research interest have been identified
 - Dynamically Adapt Property Creation with CSV 
