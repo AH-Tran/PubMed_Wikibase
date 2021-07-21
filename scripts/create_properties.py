@@ -195,7 +195,8 @@ def first_property_setup():
     p36 = property_wd('P236') #ISSN
     p37 = create_property('journal publication date', ['journal date'], 'Publication Date of the corresponding journal', 'string')
     p38 = property_wd('P1055') #NLM ID
-    batch('wikibase-property', [p31, p32, p33, p34, p35, p36, p37, p38])
+    p39 = create_property('MeSH ID Link', ['Link'], 'Link to the MeSH Entity', 'url')
+    batch('wikibase-property', [p31, p32, p33, p34, p35, p36, p37, p38, p39])
 
     # Fill all texts
     fill_texts()

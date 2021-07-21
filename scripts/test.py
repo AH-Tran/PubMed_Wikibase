@@ -41,7 +41,7 @@ def jsoninsert():
     print(author_list)
 
 def csv_search():
-    df = pd.read_csv('meshtermlist.csv')
+    df = pd.read_csv('meshtermlist.csv', index_col=0)
     
     with open('result0.json') as json_file:
         data0 = json.load(json_file)
@@ -50,10 +50,16 @@ def csv_search():
     #r2 = int(r.index.values)
     #print(r2)
     
+   # print(df)
+    r= df.index[df['MeSH Unique ID'] == 'D000079322'].tolist()
+    r = r.map(str)
+    print()
     #r= df[df['MeSH Unique ID'] == 'D016267'].index[0]
     #print(r+1)
     #search for D016267 (external fixators)   
-
+    
+    
+    '''
     mesh_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
     for m in mesh_list:
         if ( df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0]):
@@ -61,9 +67,10 @@ def csv_search():
             print('Q' + str(r))
         else:
             continue
-    
+    '''
+    #print('http://localhost:8181/wiki/Item:' + str(r))
 
 if __name__ == '__main__':
-    jsoninsert()
-    #csv_search()
+    #jsoninsert()
+    csv_search()
 
