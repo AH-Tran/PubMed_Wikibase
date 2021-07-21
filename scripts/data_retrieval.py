@@ -12,6 +12,7 @@ import spacy
 import scispacy
 from scispacy.linking import EntityLinker
 import pandas as pd
+#Selenium only works on windows, Issue is noted for further improvements
 #from selenium import webdriver
 #from selenium.webdriver.chrome.options import Options
 import time
@@ -161,6 +162,7 @@ def dataaquisition(retmaximum, queryterm):
     df = pd.DataFrame(dflist,columns=['MeSH Unique ID','MeSH Heading','ScopeNote'])
     df = df.drop_duplicates(subset=['MeSH Unique ID'])
     df['MeSHBrowserLink'] = 'https://meshb.nlm.nih.gov/record/ui?ui=' + df['MeSH Unique ID']
+    #THIS ONLY WORKS ON WINDOWS, NOTED FOR FURTHER COMMITS
     '''
     TNlist = []
     options = Options()
