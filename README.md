@@ -4,6 +4,7 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 * Automated inserts into a fresh [Raise-Wikibase](https://github.com/UB-Mannheim/RaiseWikibase) instance
 * Scripts for automated property and item creation given a queryterm
 * Scripts tested in a Windows system within a Ubuntu 20.04 terminal with Python 3.9.2
+* The Documentation can also be read on the hosted [GitHub Page](https://amir331.github.io/TheWebsite/)
 
 ## Table of contents
 - [Table of contents](#table-of-contents)
