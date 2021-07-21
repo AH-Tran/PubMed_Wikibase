@@ -143,6 +143,7 @@ def fill_texts():
 
 def first_property_setup():
     """Fill empty Wikibase with first properties and layout"""
+    print('><Creating properties<<')
     # Create first three properties in a local Wikibase
     p1 = property_wid() #wikibaseID
     p2 = property_wd('P1630') #formatter URL
@@ -198,6 +199,7 @@ def first_property_setup():
 
     # Fill all texts
     fill_texts()
+    print('>>Finisched Creating properties<<')
 
 if __name__ == "__main__":
 
