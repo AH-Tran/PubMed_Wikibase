@@ -17,6 +17,8 @@ def safeget(dct, *keys):
     return dct
 
 def upload_data(login_instance, config, metadata):
+    author_list = []
+    
     for index in metadata:
         
         # Get relevant Values from retrieved Metadata
