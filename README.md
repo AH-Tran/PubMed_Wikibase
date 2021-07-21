@@ -35,7 +35,7 @@ The Knowledge graph of this Wikibase instance is based on two type of entities:
 - **PubMed Articles**
 - **MeSH Term Entities**
 The two entities are connected to each other semantically via the shared "MeSH ID".
-![image info](./doc/entitity_structure.PNG)
+![image info](./doc/entity_structure.PNG)
 
 ## How to use
 
