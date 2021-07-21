@@ -20,55 +20,89 @@ def upload_data(login_instance, config, metadata):
     for index in metadata:
         
         # Get relevant Values from retrieved Metadata
-        NLM_ID = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MedlineJournalInfo', 'NlmUniqueID')
-        PMID = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'PMID', '#text')
-        title = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleTitle')
-        pdate = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Day') + '.' + \
-                safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Month') + '.' + \
-                safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Year')
-        author_list = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'AuthorList', 'Author')
-        language = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Language')
-        publication_type = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'PublicationTypeList', 'PublicationType', '#text')
-        journal_title = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'Title')
-        journal_issn = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'ISSN', '#text')
-        journal_date = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Day') + '.' + \
-                    safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Month') + '.' + \
-                    safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Year')
-
+        try:
+            PMID = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'PMID', '#text')
+            title = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleTitle')
+            pdate = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Day') + '.' + \
+                    safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Month') + '.' + \
+                    safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Year')
+            author_list = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'AuthorList', 'Author')
+            language = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Language')
+            #publication_type = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'PublicationTypeList', 'PublicationType', '#text')
+            NLM_ID = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MedlineJournalInfo', 'NlmUniqueID')
+            journal_title = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'Title')
+            journal_issn = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'ISSN', '#text')
+            journal_date = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Day') + '.' + \
+                        safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Month') + '.' + \
+                        safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Year')
+        except TypeError:
+            print('Malformed Metadata Value detected, skipping Value and continuing Insert')
+            pass
 
         ## Prepare the statements to be added
         item_statements = [] # all statements for one item
-        item_statements.append(wdi_core.WDString(PMID, prop_nr="P5")) #PMID
-        item_statements.append(wdi_core.WDString(NLM_ID, prop_nr="P38")) #NLM ID
-        item_statements.append(wdi_core.WDString(title, prop_nr="P11")) #title 
-        item_statements.append(wdi_core.WDString(pdate, prop_nr="P14")) #publication date 
-        for a in author_list:
-            item_statements.append(wdi_core.WDString(str(safeget(a, 'LastName')+ ',' + safeget(a, 'ForeName')), prop_nr="P13")) #author name string
-        item_statements.append(wdi_core.WDString(language, prop_nr="P18")) #language
         try:
-            item_statements.append(wdi_core.WDString(publication_type, prop_nr="P34")) #publication type
+            item_statements.append(wdi_core.WDString(PMID, prop_nr="P5")) #PMID
         except:
-            print('Incompatible Value, skipping Statement')
-        item_statements.append(wdi_core.WDString(journal_title, prop_nr="P35")) #journal title
-        item_statements.append(wdi_core.WDString(journal_issn, prop_nr="P36")) #journal issn
-        item_statements.append(wdi_core.WDString(journal_date, prop_nr="P37")) #journal date
+            pass
+        try:
+            item_statements.append(wdi_core.WDString(NLM_ID, prop_nr="P38")) #NLM ID
+        except:
+            pass
+        try:
+            item_statements.append(wdi_core.WDString(title, prop_nr="P11")) #title 
+        except:
+            pass
+        try:
+            item_statements.append(wdi_core.WDString(pdate, prop_nr="P14")) #publication date 
+        except:
+            pass
+        for a in author_list:
+            try:
+                item_statements.append(wdi_core.WDString(str(safeget(a, 'LastName')+ ',' + safeget(a, 'ForeName')), prop_nr="P13")) #author name string
+            except:
+                pass
+        try:
+            item_statements.append(wdi_core.WDString(language, prop_nr="P18")) #language
+        except:
+            pass
+        try:
+            item_statements.append(wdi_core.WDString(journal_title, prop_nr="P35")) #journal title
+        except:
+            pass
+        try:
+            item_statements.append(wdi_core.WDString(journal_issn, prop_nr="P36")) #journal issn
+        except:
+            pass
+        try:
+            item_statements.append(wdi_core.WDString(journal_date, prop_nr="P37")) #journal date
+        except:
+            pass
 
         ##item_statements.append(wdi_core.WDString("mesh descriptor id", prop_nr="P29")) #MeSH Descriptor ID
         ##item_statements.append(wdi_core.WDItem("Q1234", prop_nr="P2"))
         ##item_statements.append(wdi_core.WDURL("<http://someURL>", prop_nr="P3"))
 
         ## instantiate the Wikibase page, add statements, labels and descriptions
-        wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
-        wbPage.set_label(title, lang="en")
-        #wbPage.set_label("Kennzeichen", lang="de")
-        wbPage.set_description("Article retrieved from PubMed", lang="en")
+        try:
+            wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
+            wbPage.set_label(title, lang="en")
+            #wbPage.set_label("Kennzeichen", lang="de")
+            wbPage.set_description("Article retrieved from PubMed", lang="en")
+        except:
+            print('Continuing')
+            continue
         #wbPage.set_description("Beschreibung", lang="de")
 
         ## sanity check (debug)
-        pprint.pprint(wbPage.get_wd_json_representation())
+        #pprint.pprint(wbPage.get_wd_json_representation())
 
         ## write data to wikibase
-        wbPage.write(login_instance)
+        try:
+            wbPage.write(login_instance)
+        except:
+            print('Continuing')
+            continue
 
 #def link_entitity():
  
@@ -87,7 +121,9 @@ def main(metadata):
 
     # login to wikibase
     #login_instance = wdi_login.WDLogin(user=config.username, pwd=config.password, mediawiki_api_url=config.mediawiki_api_url)
-    upload_data(login_instance, config, metadata)   
+    upload_data(login_instance, config, metadata)  
+
+    print('>>Finished Inserting PubMed Articles<<') 
 
 if __name__ == "__main__":
         ## Create Bot and save credentials in .config.json

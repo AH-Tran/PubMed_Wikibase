@@ -180,22 +180,18 @@ def first_property_setup():
     p28 = create_property('ScopeNote', ['Note'], 'Note describing further the Label of a MeSH Heading', 'string')
     p29 = create_property('MeshBrowserLink', ['Mesh URL', 'MeSH Browser'], 'MeSH Browser URL of a specific Mesh Heading', 'url')
     p30 = create_property('MeSH Treecode', ['Tree', 'MeSH Tree'], 'MeSH Tree Code of a specific Mesh Heading', 'string')
-    #pmesh1 = property_wd('P672') #MeSH tree code
-    #pmesh2 = property_wd('P6694') #MeSH concept ID
-    #pmesh3 = property_wd('P9341') #MeSH qualifier ID 
 
     #pmesh5 = property_wd('') #MeSH Headings
     batch('wikibase-property', [p26, p27, p28, p29, p30])
 
     #Create new Pubmed relevant properties not existent in Wikidata
-    #keywords, affiliations, abstract, publication type
     p31 = create_property('keywords', ['keyword'], 'main keywords describing a publication', 'string')
     p32 = create_property('affiliations', ['affiliation', 'institute', 'organization'], 'organizations and affiliations associated with a given publication', 'string')
     p33 = create_property('abstract', ['abstracts', 'short summary'], 'The abstract of a given publication, summarizing the publications findings', 'string')
     p34 = create_property('publication type', ['publication medium'], 'The type/medium of the given publication i.e. journals, reports, etc.', 'string')
     #Create additional properties
     p35 = create_property('journal title', ['magazine title'], 'Title of the corresponding journal', 'string')
-    p36 = property_wd('P275') #ISSN
+    p36 = property_wd('P236') #ISSN
     p37 = create_property('journal publication date', ['journal date'], 'Publication Date of the corresponding journal', 'string')
     p38 = property_wd('P1055') #NLM ID
     batch('wikibase-property', [p31, p32, p33, p34, p35, p36, p37, p38])

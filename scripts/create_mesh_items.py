@@ -12,21 +12,25 @@ def upload_data(login_instance, config, meshtermlist):
     mydata = pd.read_csv(meshtermlist)
     for index, row in mydata.iterrows():
         ## Prepare the statements to be added
-        item_statements = [] # all statements for one item
-        item_statements.append(wdi_core.WDString(mydata.loc[index].at['MeSH Unique ID'], prop_nr="P26")) #MeSH Unique ID 
-        item_statements.append(wdi_core.WDString(mydata.loc[index].at['MeSH Heading'], prop_nr="P27")) #MeSH Heading 
-        #item_statements.append(wdi_core.WDString(mydata.loc[index].at['ScopeNote'], prop_nr="P28")) #Scope Note
-        item_statements.append(wdi_core.WDUrl(mydata.loc[index].at['MeSHBrowserLink'], prop_nr="P29")) #MeSH URL
-        #item_statements.append(wdi_core.WDString(mydata.loc[index].at['TreeNumbers'], prop_nr="P30")) #Tree Number
-        ##item_statements.append(wdi_core.WDString("mesh descriptor id", prop_nr="P29")) #MeSH Descriptor ID
-        ##item_statements.append(wdi_core.WDItem("Q1234", prop_nr="P2"))
-        #item_statements.append(wdi_core.WDURL("<http://someURL>", prop_nr="P3"))
+        try:
+            item_statements = [] # all statements for one item
+            item_statements.append(wdi_core.WDString(mydata.loc[index].at['MeSH Unique ID'], prop_nr="P26")) #MeSH Unique ID 
+            item_statements.append(wdi_core.WDString(mydata.loc[index].at['MeSH Heading'], prop_nr="P27")) #MeSH Heading 
+            #item_statements.append(wdi_core.WDString(mydata.loc[index].at['ScopeNote'], prop_nr="P28")) #Scope Note
+            item_statements.append(wdi_core.WDUrl(mydata.loc[index].at['MeSHBrowserLink'], prop_nr="P29")) #MeSH URL
+            #item_statements.append(wdi_core.WDString(mydata.loc[index].at['TreeNumbers'], prop_nr="P30")) #Tree Number
+        except:
+            pass
 
         ## instantiate the Wikibase page, add statements, labels and descriptions
-        wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
-        wbPage.set_label(mydata.loc[index].at['MeSH Heading'], lang="en")
-        #wbPage.set_label("Kennzeichen", lang="de")
-        wbPage.set_description("MeSH Entity extracted from NLM", lang="en")
+        try:
+            wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
+            wbPage.set_label(mydata.loc[index].at['MeSH Heading'], lang="en")
+            #wbPage.set_label("Kennzeichen", lang="de")
+            wbPage.set_description("MeSH Entity extracted from NLM", lang="en")
+        except:
+            print('Continuing')
+            continue
         #wbPage.set_description("Beschreibung", lang="de")
 
 
@@ -34,7 +38,11 @@ def upload_data(login_instance, config, meshtermlist):
         pprint.pprint(wbPage.get_wd_json_representation())
 
         ## write data to wikibase
-        wbPage.write(login_instance)
+        try:
+            wbPage.write(login_instance)
+        except:
+            print('Continuing')
+            continue
 
 def main(meshtermlist):
     ## Create Bot and save credentials in .config.json
@@ -51,7 +59,10 @@ def main(meshtermlist):
 
     # login to wikibase
     #login_instance = wdi_login.WDLogin(user=config.username, pwd=config.password, mediawiki_api_url=config.mediawiki_api_url)
+    
     upload_data(login_instance, config, meshtermlist)
+
+    print('>>Finished Inserting MeSH Entities<<') 
 
 if __name__ == "__main__":
     ## Create Bot and save credentials in .config.json
