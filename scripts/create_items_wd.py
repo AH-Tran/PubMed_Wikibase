@@ -87,7 +87,7 @@ def upload_data(login_instance, config, metadata):
             for m in mesh_list:
                 if ( df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0]):
                     r= df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0] + 1
-                    entity_link = 'Q' + str(r)
+                    entity_link = 'http://localhost:8181/wiki/Item:'+ 'Q' + str(r)
                     item_statements.append(wdi_core.WDItem(entity_link, prop_nr="P39"))
         except:
             pass
