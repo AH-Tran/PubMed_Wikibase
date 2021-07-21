@@ -30,10 +30,10 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 A Repository that specializes itself in creating a fresh Wikibase instance filled with relevant PubMed metadata and MeSH Headings from the NLM Database.
 ![image info](./doc/overview.PNG)
 
-## Knowledge Graph Structure
+## Entities and Properties
 The Knowledge graph of this Wikibase instance is based on two type of entities:
 - **PubMed Articles**
-- **MeSH Term Entities**
+- **MeSH Term Entities**  
 The two entities are connected to each other semantically via the shared "MeSH ID".
 ![image info](./doc/entity_structure.PNG)
 
