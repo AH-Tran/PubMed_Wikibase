@@ -93,7 +93,7 @@ The following sections introduces the scripts responsible for automated ingestio
 
 ### Systems.py
 >Mainscript that executes all important scripts to sucessfully fill the Wikibase instance:  
->[systems.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_properties.py)
+>[systems.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/systems.py)
 ```python
 #Import Main Scripts
 import create_properties 
@@ -194,7 +194,7 @@ def upload_data(login_instance, config, meshtermlist):
 
 ### Creating PubMed Items
 >Automatically creates PubMed article items with retrieved metadata:  
->[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items.py)
+>[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items_wd.py)
 ```python
 def upload_data(login_instance, config, metadata):
     author_list = []
@@ -284,4 +284,4 @@ Following Issues and possible points of further research interest have been iden
 - Calculate IR/NLP metrics on Abstracts
 - Implement [MeSH Tree Hierarchy](https://www.ncbi.nlm.nih.gov/mesh/68003141) as Knowledge Graph Structure
 - Complement Knowledge Graph Structure with semantic connection between articles, author entities and affiliation entities
-- Measure Accuracy on MeSH Term Enrichening Process in [data_retrieval.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/data_retrieval.py
+- Measure Accuracy on MeSH Term Enrichening Process in [data_retrieval.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/data_retrieval.py)
