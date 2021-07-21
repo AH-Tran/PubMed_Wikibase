@@ -28,7 +28,8 @@ def IDacq(retmaximum, queryterm: str):
         list: list of all IDs as a String
     """
     #Constants
-    baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&'
+    api_key = #ADD API KEY HERE
+    baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=' + api_key + '&'
     retmax = retmaximum
     database = "db=pubmed"
     #process the query to not have spaces but "+"
