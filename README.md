@@ -51,7 +51,7 @@ For the Installation the following steps are required after cloning/forking this
 **Install Docker & Docker Desktop**  
 > Docker Docs : [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
-**Creating Virtual Environment for Usage**
+**Creating Virtual Environment for Usage**  
 On Linux and MacOS
 ```shell
 $ python3 -m venv venv
