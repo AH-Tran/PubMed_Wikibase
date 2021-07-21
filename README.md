@@ -21,10 +21,10 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
   - [Creating PubMed Items](#creating-pubmed-items)
 - [Useful Docker Commands](#useful-docker-commands)
   - [Creating Backups](#creating-backups)
+- [Performance](#performance)
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
 - [Further Research](#further-research)
-- [TODO for Documentation](#todo-for-documentation)
 
 ## Overview
 A Repository that specializes itself in creating a fresh Wikibase instance filled with relevant PubMed metadata and MeSH Headings from the NLM Database.
@@ -244,16 +244,25 @@ sudo rm -rf mediawiki-*  query-service-data/ quickstatements-data/
 docker-compose up -d
 ```
 **Reload a single service (example: wikibase) to adopt new changes in settings**
-> docker-compose up --no-deps -d wikibase
-
+```
+docker-compose up --no-deps -d wikibase
+```
 
 ### Creating Backups
-> Volume backups and snapshots can be made through these commands.
+Volume backups and snapshots can be made through these commands.
 ```
 docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
 docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
 docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
 ```
+## Performance
+Inspecting the Performance, we see a linear growth of time taken per Article Volume, averaging around **1.88** Article Insertions per second.
+| Number of Articles      | Time in (s) | Article per second |
+| ----------- | ----------- | ----------- |
+| 100      | 191       | 1.91       |
+| 250   | 456        | 1.82       |
+| 500      | 948       | 1.9       |
+| 800   | 1520        | 1.9       |
 
 ## Sources
 - [PubMed](https://pubmed.ncbi.nlm.nih.gov/)
@@ -262,7 +271,7 @@ docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackup
 - [Raise-Wikibase](https://github.com/UB-Mannheim/RaiseWikibase)
 
 ## Acknowledgements
-
+Many thanks to [UB-Mannheim](https://github.com/UB-Mannheim/RaiseWikibase) for providing the Raise Wikibase Repository, [Adam Shorland](https://addshore.com/) for providing many resources when it comes to building and customizing Wikibase instances, and our professores for the continued guidance.
 ## Further Research
 Following Issues and possible points of further research interest have been identified
 - Dynamically Adapt Property Creation with CSV 
