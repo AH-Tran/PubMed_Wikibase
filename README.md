@@ -71,6 +71,8 @@ On Windows
 ```shell
 .\venv\Scripts\activate
 ```
+**Requirements.txt**
+>pip3 install -r requirements.txt
 
 **Further Instructions**
 > Raise Wikibase as further reference : [https://github.com/UB-Mannheim/RaiseWikibase](https://github.com/UB-Mannheim/RaiseWikibase)
@@ -82,7 +84,6 @@ pip3 install -e .
 env.tmpl > rename to '.env' and insert usernames/password
     - passwords must be at least 10 characters long!
     - [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be capitalized or ideally full cap in order to avoid db connection errors
-pip3 install -r requirements.txt
 docker-compose up -d
 ```
 
