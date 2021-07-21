@@ -30,11 +30,10 @@ A Repository that specializes itself in creating a fresh Wikibase instance fille
 ![image info](./doc/overview.PNG)
 
 ## Knowledge Graph Structure
-> - Knowledge graph based on Wikibase, based on 2 types of entities
-> - First Entity is the Pubmed Article Entity
-> - Second Entity is Mesh Entities (contain relevant information such as the Mesh Heading, Mesh Id, Mesh URL and Scope Node)
-> - The 2 entities are symatically connected to each other via the mesh ID
-
+> - Knowledge graph on Wikibase is based on 2 types of entities
+> 	- First entity is "Pubmed Article" entity
+> 	- Second entity is "MeshTerm" entitiy (contains relevant information such as the "Mesh Heading", "Mesh ID", "Mesh URL" and "Scope Node")
+> - The 2 entities are connected semantically to each other via "Mesh ID"
 
 ## How to use
 
