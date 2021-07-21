@@ -149,3 +149,4 @@ scripts/dump/
 
 # config file
 .config.json
+scripts/.config.json

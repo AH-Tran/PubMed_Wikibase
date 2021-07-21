@@ -15,7 +15,7 @@ if __name__ == "__main__":
     Returns:
         list of dict: list of dictionaries we can iterate after with the other function to upload them to the wikibase
     """
-    retmaximum = 10
+    retmaximum = 500
     queryterm ='infectious diseases'
     time0 = time.time()
 

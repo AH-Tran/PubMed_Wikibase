@@ -18,6 +18,9 @@ def safeget(dct, *keys):
 
 def upload_data(login_instance, config, metadata):
     author_list = []
+    mesh_list = []
+    df = pd.read_csv('meshtermlist.csv')
+
     for index in metadata:
         
         # Get relevant Values from retrieved Metadata
@@ -36,6 +39,7 @@ def upload_data(login_instance, config, metadata):
             journal_date = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Day') + '.' + \
                         safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Month') + '.' + \
                         safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Year')
+            mesh_list = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
         except TypeError:
             print('Malformed Metadata Value detected, skipping Value and continuing Insert')
             pass
@@ -79,7 +83,14 @@ def upload_data(login_instance, config, metadata):
             item_statements.append(wdi_core.WDString(journal_date, prop_nr="P37")) #journal date
         except:
             pass
-
+        try:
+            for m in mesh_list:
+                if ( df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0]):
+                    r= df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0] + 1
+                    entity_link = 'http://localhost:8181/wiki/Item:'+ 'Q' + str(r)
+                    item_statements.append(wdi_core.WDItem(entity_link, prop_nr="P39"))
+        except:
+            pass
         ##item_statements.append(wdi_core.WDString("mesh descriptor id", prop_nr="P29")) #MeSH Descriptor ID
         ##item_statements.append(wdi_core.WDItem("Q1234", prop_nr="P2"))
         ##item_statements.append(wdi_core.WDURL("<http://someURL>", prop_nr="P3"))
@@ -96,7 +107,7 @@ def upload_data(login_instance, config, metadata):
         #wbPage.set_description("Beschreibung", lang="de")
 
         ## sanity check (debug)
-        #pprint.pprint(wbPage.get_wd_json_representation())
+        pprint.pprint(wbPage.get_wd_json_representation())
 
         ## write data to wikibase
         try:

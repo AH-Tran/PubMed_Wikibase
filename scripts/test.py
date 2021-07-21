@@ -50,20 +50,23 @@ def csv_search():
     #r2 = int(r.index.values)
     #print(r2)
     
-    #r= df[df['MeSH Unique ID'] == 'D016267'].index[0]
+    r= df[df['MeSH Unique ID'] == 'D015431'].index[0]
+    #rint(type(r))
+    #print(r)
+    #r= df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0]
     #print(r+1)
     #search for D016267 (external fixators)   
-
-    mesh_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
-    for m in mesh_list:
-        if ( df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0]):
-            r= df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0] + 1
-            print('Q' + str(r))
-        else:
-            continue
     
+    #mesh_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
+    #for m in mesh_list:
+    #    r = safeget(m, '@UI')
+    #    print(r)
+    #    if ( df[df['MeSH Unique ID'] == r].index[0] ):
+    #        print('safe')
+
+    print('http://localhost:8181/wiki/Item:'+ 'Q' + str(r))
 
 if __name__ == '__main__':
-    jsoninsert()
-    #csv_search()
+    #jsoninsert()
+    csv_search()
 
