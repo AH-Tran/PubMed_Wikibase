@@ -30,30 +30,44 @@ A Repository that specializes itself in creating a fresh Wikibase instance fille
 ![image info](./doc/overview.PNG)
 
 ## Knowledge Graph Structure
-> - Knowledge graph on Wikibase is based on 2 types of entities
-> 	- First entity is "Pubmed Article" entity
-> 	- Second entity is "MeshTerm" entitiy (contains relevant information such as the "Mesh Heading", "Mesh ID", "Mesh URL" and "Scope Node")
-> - The 2 entities are connected semantically to each other via "Mesh ID"
+The Knowledge graph of this Wikibase instance is based on two type of entities:
+- **PubMed Articles**
+- **MeSH Term Entities**
+The two entities are connected to each other semantically via the shared "MeSH ID".
 
 ## How to use
 
 ### Installation
+For the Installation the following steps are required after cloning/forking this repository:  
+**Install & Enable WSL2**  
+> Microsoft Docs : [https://docs.microsoft.com/en-us/windows/wsl/install-win10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+**Install Docker &Docker Desktop**  
+> Docker Docs : [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+**For Windows: Install Ubuntu Terminal**  
+> Ubuntu Docs : [https://ubuntu.com/tutorials/ubuntu-on-windows#1-overview](https://ubuntu.com/tutorials/ubuntu-on-windows#1-overview)
+
+**Creating Virtual Environment for Usage**
 ```
-- Install & Enable WSL2
-- Install Docker
-- For Windows: Install Ubuntu Terminal & Windows Terminal from Windows Store & relevant libraries
-    - https://codefellows.github.io/setup-guide/
-- Create Directory
-- git clone https://github.com/UB-Mannheim/RaiseWikibase
+pip install virtualenv
+# Once Inside the Project Folder
+virtualenv env
+```
+
+**Further Instructions**
+```
+git clone https://github.com/UB-Mannheim/RaiseWikibase
 cd RaiseWikibase/
 sudo apt install default-libmysqlclient-dev
 pip3 install -e .
-- env.tmpl > rename to '.env' and insert usernames/password
+env.tmpl > rename to '.env' and insert usernames/password
     - passwords must be at least 10 characters long!
     - [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be capitalized or ideally full cap in order to avoid db connection errors
 pip3 install -r requirements.txt
-- docker-compose up -d
+docker-compose up -d
 ```
+
 ### Customizing Wikibase
 ```
 ## Making Changes
