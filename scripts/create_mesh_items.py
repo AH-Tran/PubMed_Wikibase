@@ -8,7 +8,13 @@ import pandas as pd
 import pprint
 
 def upload_data(login_instance, config, meshtermlist):
-    # Load excel table to load into Wikibase
+    """
+    Creates Mesh terms from the given mesh term list
+    Args:
+        login_instance : login instance of the wikibase
+        config : login credentials
+        meshtermlist (csv): csv containing all relevant MeSH term lists
+    """
     mydata = pd.read_csv(meshtermlist)
     for index, row in mydata.iterrows():
         ## Prepare the statements to be added

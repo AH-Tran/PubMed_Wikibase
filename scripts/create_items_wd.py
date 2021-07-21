@@ -9,6 +9,14 @@ import pprint
 import json
 
 def safeget(dct, *keys):
+    """
+    retrieves the specified value from the specified keys of a dictionary
+    Args:
+        dct (dict) : a dictionary containing pubmed metadata
+        *keys : path of keys
+    Returns:
+        dct: desired value from dictionairy
+    """
     for key in keys:
         try:
             dct = dct[key]
@@ -17,6 +25,15 @@ def safeget(dct, *keys):
     return dct
 
 def upload_data(login_instance, config, metadata):
+    """
+    Uploads all retrieved PubMed articles including the relevant statements into the wikibase instance
+    Args:
+        login_instance : login instance of the wikibase
+        config : login credentials
+        metadata (list & dict): List containing all PubMed metadata in jsondict form. One Jsondict equals one article
+    Returns:
+        list of dict: list of dictionaries we can iterate after with the other function to upload them to the wikibase
+    """
     author_list = []
     mesh_list = []
     df = pd.read_csv('meshtermlist.csv')
@@ -91,9 +108,6 @@ def upload_data(login_instance, config, metadata):
                     item_statements.append(wdi_core.WDItem(entity_link, prop_nr="P39"))
         except:
             pass
-        ##item_statements.append(wdi_core.WDString("mesh descriptor id", prop_nr="P29")) #MeSH Descriptor ID
-        ##item_statements.append(wdi_core.WDItem("Q1234", prop_nr="P2"))
-        ##item_statements.append(wdi_core.WDURL("<http://someURL>", prop_nr="P3"))
 
         ## instantiate the Wikibase page, add statements, labels and descriptions
         try:
