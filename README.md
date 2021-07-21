@@ -89,6 +89,7 @@ env.tmpl > rename to '.env' and insert usernames/password
     - [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be capitalized or ideally full cap in order to avoid db connection errors
 docker-compose up -d
 ```
+**Please be aware that once the Wikibase instance is running, that it should be filled with first items and properties as soon as possible! An empty wikibase is prone to many errors, especially when restarting the instance!**
 
 ### Customizing Wikibase
 With [Extensions](https://addshore.com/2018/09/wikibase-extensions-on-wikidata-org/), it is possible to customize the Wikibase Instance.
