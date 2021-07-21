@@ -169,7 +169,7 @@ return dicts
 
 ### Creating MeSH Items
 >Automatically creates MeSH items with retrieved metadata:  
->[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items.py)
+>[create_mesh_items.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items.py)
 ```python
 def upload_data(login_instance, config, meshtermlist):
     # Load excel table to load into Wikibase
@@ -195,7 +195,7 @@ def upload_data(login_instance, config, meshtermlist):
 
 ### Creating PubMed Items
 >Automatically creates PubMed article items with retrieved metadata:  
->[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_items_wd.py)
+>[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_mesh_items.py)
 ```python
 def upload_data(login_instance, config, metadata):
     author_list = []
