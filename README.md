@@ -85,14 +85,12 @@ cd RaiseWikibase/
 sudo apt install default-libmysqlclient-dev
 pip3 install -e .
 env.tmpl > rename to '.env' and insert usernames/password
-    - passwords must be at least 10 characters long!
-    - [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be capitalized or ideally full cap in order to avoid db connection errors
 docker-compose up -d
 ```
 ### Easy Errors to avoid on setup
 - Fill the Wikibase instance as soon as possible with first items/properties. An empty wikibase is prone to many errors, especially on restart.
-- Passwords must be at least 10 characters long or else the wikibase services will refuse to properly authenticate
-- [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be (fully) capitalized in order to avoid db connection errors when inserting items
+- **env.tmpl:** Passwords must be at least 10 characters long or else the wikibase services will refuse to properly authenticate
+- **env.tmpl:** [WB_DB_USER], [WB_DB_NAME], [WB_ADMIN_USER] must be (fully) capitalized in order to avoid db connection errors when inserting items
 
 ### Customizing Wikibase
 With [Extensions](https://addshore.com/2018/09/wikibase-extensions-on-wikidata-org/), it is possible to customize the Wikibase Instance.
