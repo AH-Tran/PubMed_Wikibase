@@ -25,7 +25,6 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
 - [Further Research](#further-research)
-- [TODO for Documentation](#todo-for-documentation)
 
 ## Overview
 A Repository that specializes itself in creating a fresh Wikibase instance filled with relevant PubMed metadata and MeSH Headings from the NLM Database.
@@ -272,7 +271,7 @@ Inspecting the Performance, we see a linear growth of time taken per Article Vol
 - [Raise-Wikibase](https://github.com/UB-Mannheim/RaiseWikibase)
 
 ## Acknowledgements
-
+Many thanks to [UB-Mannheim](https://github.com/UB-Mannheim/RaiseWikibase) for providing the Raise Wikibase Repository, [Adam Shorland](https://addshore.com/) for providing many resources when it comes to building and customizing Wikibase instances, and our professores for the continued guidance.
 ## Further Research
 Following Issues and possible points of further research interest have been identified
 - Dynamically Adapt Property Creation with CSV 
