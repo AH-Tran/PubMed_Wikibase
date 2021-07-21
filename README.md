@@ -245,11 +245,12 @@ sudo rm -rf mediawiki-*  query-service-data/ quickstatements-data/
 docker-compose up -d
 ```
 **Reload a single service (example: wikibase) to adopt new changes in settings**
-> docker-compose up --no-deps -d wikibase
-
+```
+docker-compose up --no-deps -d wikibase
+```
 
 ### Creating Backups
-> Volume backups and snapshots can be made through these commands.
+Volume backups and snapshots can be made through these commands.
 ```
 docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-mysql-data_20190129
 docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
