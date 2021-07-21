@@ -69,12 +69,13 @@ docker-compose up -d
 ```
 
 ### Customizing Wikibase
+With [Extensions](https://addshore.com/2018/09/wikibase-extensions-on-wikidata-org/), it is possible to customize the Wikibase Instance.
 ```
 ## Making Changes
 - LocalSettings.php.template
 ## Extensions
 - Download Extension in ./RaiseWikibase/extensions
-- Add Volume to docker-ompose.yml
+- Add Volume to docker-compose.yml
     - ./extensions/TemplateStyles:/var/www/html/extensions/TemplateStyles
 - Add Volume to LocalSettings.php.template
     -wfLoadExtension( 'TemplateStyles' );
@@ -84,6 +85,7 @@ docker-compose up -d
     ];
 ```
 ## Important Scripts
+The following sections introduces the scripts responsible for automated ingestion of a fresh Wikibase instance.
 
 ### Systems.py
 >Mainscript that executes all important scripts to sucessfully fill the Wikibase instance:  
@@ -190,38 +192,59 @@ def upload_data(login_instance, config, meshtermlist):
 >Automatically creates PubMed article items with retrieved metadata:  
 >[create_items_wd.py](https://github.com/AH-Tran/ID_Wikibase/blob/main/scripts/create_items_wd.py)
 ```python
-def upload_data(login_instance, config):
-    # load excel table to load into Wikibase
-    mydata = pd.read_csv("pubmed_data.csv")
-    for index, row in mydata.iterrows():
+def upload_data(login_instance, config, metadata):
+    author_list = []
+    mesh_list = []
+    df = pd.read_csv('meshtermlist.csv')
+
+    for index in metadata:
+        # Get relevant Values from retrieved Metadata
+            PMID = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'PMID', '#text')
+            title = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleTitle')
+            pdate = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Day') + '.' + \
+                    safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Month') + '.' + \
+                    safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Year')
+            author_list = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'AuthorList', 'Author')
+            language = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Language')
+            mesh_list = safeget(index, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
+
         ## Prepare the statements to be added
         item_statements = [] # all statements for one item
-        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], prop_nr="P11")) #title 
-        item_statements.append(wdi_core.WDString(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_AuthorList_Author_LastName'], prop_nr="P12")) #author
+        item_statements.append(wdi_core.WDString(PMID, prop_nr="P5")) #PMID
+        item_statements.append(wdi_core.WDString(title, prop_nr="P11")) #title 
+        item_statements.append(wdi_core.WDString(pdate, prop_nr="P14")) #publication date 
+        for a in author_list:
+                item_statements.append(wdi_core.WDString(str(safeget(a, 'LastName')+ ',' + safeget(a, 'ForeName')), prop_nr="P13")) #author name string
+        item_statements.append(wdi_core.WDString(language, prop_nr="P18")) #language
+        for m in mesh_list:
+            if ( df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0]):
+                r= df[df['MeSH Unique ID'] == safeget(m, '@UI')].index[0] + 1
+                entity_link = 'http://localhost:8181/wiki/Item:'+ 'Q' + str(r)
+                item_statements.append(wdi_core.WDItem(entity_link, prop_nr="P39"))
 
         ## instantiate the Wikibase page, add statements, labels and descriptions
-        wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
-        wbPage.set_label(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'], lang="en")
-        wbPage.set_description("Article retrieved from PubMed", lang="en")
-
-        ## sanity check (debug)
-        pprint.pprint(wbPage.get_wd_json_representation())
+            wbPage = wdi_core.WDItemEngine(data=item_statements, mediawiki_api_url=config.wikibase_url + "/w/api.php")
+            wbPage.set_label(title, lang="en")
+            wbPage.set_description("Article retrieved from PubMed", lang="en")
 
         ## write data to wikibase
-        wbPage.write(login_instance)
+            wbPage.write(login_instance)
 ```
 
 ## Useful Docker Commands
-> Following Docker Commands can be of use when customizing and editing the Wikibase instance.
+Following Docker Commands can be of use when customizing and editing the Wikibase instance.
+
+**Stop Wikibase Docker**
+> docker-compose down
+
+**Remove uploaded Data & run fresh Wikibase Instance**
 ```
-### Stop Wikibase Docker
-docker-compose down
-### Remove uploaded Data & run fresh Wikibase Instance
 sudo rm -rf mediawiki-*  query-service-data/ quickstatements-data/
 docker-compose up -d
-### Reload a single service (example: wikibase) to adopt new changes in settings
-docker-compose up --no-deps -d wikibase
 ```
+**Reload a single service (example: wikibase) to adopt new changes in settings**
+> docker-compose up --no-deps -d wikibase
+
 
 ### Creating Backups
 > Volume Backups can bve made through these commands.
