@@ -42,14 +42,14 @@ The two entities are connected to each other semantically via the shared "MeSH I
 
 ### Installation
 For the Installation the following steps are required after cloning/forking this repository:  
-**Install & Enable WSL2**  
+**For Windows: Install & Enable WSL2**  
 > Microsoft Docs : [https://docs.microsoft.com/en-us/windows/wsl/install-win10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
-
-**Install Docker &Docker Desktop**  
-> Docker Docs : [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
 **For Windows: Install Ubuntu Terminal**  
 > Ubuntu Docs : [https://ubuntu.com/tutorials/ubuntu-on-windows#1-overview](https://ubuntu.com/tutorials/ubuntu-on-windows#1-overview)
+
+**Install Docker &Docker Desktop**  
+> Docker Docs : [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
 **Creating Virtual Environment for Usage**
 ```
