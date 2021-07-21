@@ -58,6 +58,7 @@ virtualenv env
 ```
 
 **Further Instructions**
+> Raise Wikibase as further reference : [https://github.com/UB-Mannheim/RaiseWikibase(https://github.com/UB-Mannheim/RaiseWikibase)
 ```
 git clone https://github.com/UB-Mannheim/RaiseWikibase
 cd RaiseWikibase/
