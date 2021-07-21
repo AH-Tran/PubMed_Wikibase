@@ -21,6 +21,7 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
   - [Creating PubMed Items](#creating-pubmed-items)
 - [Useful Docker Commands](#useful-docker-commands)
   - [Creating Backups](#creating-backups)
+- [Performance](#performance)
 - [Sources](#sources)
 - [Acknowledgements](#acknowledgements)
 - [Further Research](#further-research)
@@ -254,6 +255,14 @@ docker run -v wikibase-registry_mediawiki-mysql-data:/volume -v /root/volumeBack
 docker run -v wikibase-registry_mediawiki-images-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup mediawiki-images-data_20190129
 docker run -v wikibase-registry_query-service-data:/volume -v /root/volumeBackups:/backup --rm loomchild/volume-backup backup query-service-data_20190129
 ```
+## Performance
+Inspecting the Performance, we see a linear growth of time taken per Article Volume, averaging around **1.88** Article Insertions per second.
+| Number of Articles      | Time in (s) | Article per second |
+| ----------- | ----------- | ----------- |
+| 100      | 191       | 1.91       |
+| 250   | 456        | 1.82       |
+| 500      | 948       | 1.9       |
+| 800   | 1520        | 1.9       |
 
 ## Sources
 - [PubMed](https://pubmed.ncbi.nlm.nih.gov/)
