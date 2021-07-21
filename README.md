@@ -56,22 +56,14 @@ For the Installation the following steps are required after cloning/forking this
 On Linux and MacOS
 ```shell
 $ python3 -m venv venv
+$ source venv/bin/activate
 ```
 On Windows
 ```shell
 $ py -m venv venv
-```
-To activate and work with your virtual python environment, please run this command:
-
-On Linux and MacOs
-```shell
-$ source venv/bin/activate
-```
-
-On Windows
-```shell
 .\venv\Scripts\activate
 ```
+
 **Requirements.txt**  
 ```
 pip3 install -r requirements.txt
