@@ -193,7 +193,12 @@ def first_property_setup():
     p32 = create_property('affiliations', ['affiliation', 'institute', 'organization'], 'organizations and affiliations associated with a given publication', 'string')
     p33 = create_property('abstract', ['abstracts', 'short summary'], 'The abstract of a given publication, summarizing the publications findings', 'string')
     p34 = create_property('publication type', ['publication medium'], 'The type/medium of the given publication i.e. journals, reports, etc.', 'string')
-    batch('wikibase-property', [p31, p32, p33, p34])
+    #Create additional properties
+    p35 = create_property('journal title', ['magazine title'], 'Title of the corresponding journal', 'string')
+    p36 = property_wd('P275') #ISSN
+    p37 = create_property('journal publication date', ['journal date'], 'Publication Date of the corresponding journal', 'string')
+    p38 = property_wd('P1055') #NLM ID
+    batch('wikibase-property', [p31, p32, p33, p34, p35, p36, p37, p38])
 
     # Fill all texts
     fill_texts()

@@ -8,7 +8,7 @@ import pandas as pd
 import pprint
 
 def upload_data(login_instance, config, meshtermlist):
-    # load excel table to load into Wikibase
+    # Load excel table to load into Wikibase
     mydata = pd.read_csv(meshtermlist)
     for index, row in mydata.iterrows():
         ## Prepare the statements to be added

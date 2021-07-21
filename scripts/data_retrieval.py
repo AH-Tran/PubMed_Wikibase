@@ -13,13 +13,13 @@ import spacy
 import scispacy
 from scispacy.linking import EntityLinker
 
-data_path = os.path.abspath('../data/')
+#data_path = os.path.abspath('../data/')
 #file_path = os.path.
 
 #function to get a list of all jsondicts
-def IDacq(queryterm: str):
+def IDacq(retmaximum, queryterm: str):
     baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&'
-    retmax = 10
+    retmax = retmaximum
     database = "db=pubmed"
     query = ''
     advquery= queryterm.split()
@@ -57,7 +57,7 @@ def IDacq(queryterm: str):
     print(len(set(IDLIST)))
     return IDLIST
 
-def dataaquisition(queryterm):
+def dataaquisition(retmaximum, queryterm):
     """
     generates a list of all dictionaries with the metadata information
     Args:
@@ -67,7 +67,7 @@ def dataaquisition(queryterm):
     """
     nlp = spacy.load("en_core_sci_sm")
     nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "mesh"})
-    IDLIST = IDacq(queryterm)
+    IDLIST = IDacq(retmaximum, queryterm)
     dicts = []
     for ID in IDLIST:
         print("Download des Artikels: " + str(ID))
@@ -161,25 +161,9 @@ def MeSHTermDF(queryterm):
     df['MeSHBrowserLink'] = 'https://meshb.nlm.nih.gov/record/ui?ui=' + df['MeSH Unique ID']
     return df
 
-def main():
-    result = dataaquisition('infectious diseases')
+def main(retmaximum, queryterm):
+    result = dataaquisition(retmaximum, queryterm)
     return result
 
 if __name__ == '__main__':
-    result = dataaquisition('infectious diseases') # type list containing dicts as items
-    #for i in result:
-    #print("Type:")
-    #print(result[1])
-        #with open(os.path.join(os.path.dirname(__file__), data_path), 'w') a file:
-    #for i in result:
-    #    with open(data_path,i +'.json', 'w') as fp:
-    #        json.dump(result[i], fp, indent=4)
-
-    with open('result0.json', 'w') as fp:
-            json.dump(result[0], fp, indent=4)
-    with open('result1.json', 'w') as fp:
-            json.dump(result[1], fp, indent=4)
-    #print(len(result))
-    #print(result)
-    #with open('pubmed_data.json','w') as file:
-    #             file.write(result)
+    main()

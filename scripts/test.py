@@ -1,19 +1,12 @@
-# Importing the required libraries
-import xml.etree.ElementTree as Xet
-import pandas as pd
-# importing the module
 import json
 
-def test():
-    mydata = pd.read_csv("pubmed_data.csv")
-    print(mydata.loc[0].at['PubmedArticle_MedlineCitation_Owner'])
-    #print(mydata.at[0,'PubmedArticle_MedlineCitation_Owner'])
-    for index, row in mydata.iterrows():
-        print(mydata.loc[index].at['PubmedArticle_MedlineCitation_Article_ArticleTitle'])
-        #print(index)
-    #    print(row)
-        print("*** END ITERATION ***")
-    #print(mydata.iloc[0]['PubmedArticle_MedlineCitation_Article_ArticleTitle'])
+def safeget(dct, *keys):
+    for key in keys:
+        try:
+            dct = dct[key]
+        except KeyError:
+            return None
+    return dct
 
 def jsoninsert():
     # Opening JSON file
@@ -21,32 +14,32 @@ def jsoninsert():
         data0 = json.load(json_file)
     with open('result1.json') as json_file:
         data1 = json.load(json_file)
-        # Print the type of data variable
-    df1 = pd.DataFrame([data0])
-    df2 = pd.DataFrame([data1])
 
-    for key in data0:
-        if key in data1:
-            data0[key].update(data1[key])
+    #safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article')
+    title = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleTitle')
+    date = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Day') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Month') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'ArticleDate', 'Year')
+    author_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'AuthorList', 'Author')
+    for a in author_list:
+       safeget(a, 'LastName')+ ',' + safeget(a, 'ForeName')
+    language = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Language')
+    publication_type = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'PublicationTypeList', 'PublicationType', '#text') #try except
+    journal_title = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'Title')#
+    journal_issn = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'ISSN', '#text')#
+    journal_date = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Day') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Month') + '.' + \
+                safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'Article', 'Journal', 'JournalIssue', 'PubDate', 'Year')#
+    NLM_ID = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MedlineJournalInfo', 'NlmUniqueID')#
+    PMID = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'PMID', '#text')
+
+    mesh_list = safeget(data0, 'PubmedArticleSet','PubmedArticle', 'MedlineCitation', 'MeshHeadingList', 'DescriptorName')
+    for m in mesh_list:
+        safeget(m, '@UI')
     
-    with open('result_union.json', 'w') as output_file:
-        json.dump(df1, output_file)
-    #MergeJson = pd.concat([df1, df2])
-    #MergeJson.to_json("result_union.json")  
-
-def merge_JsonFiles(filename):
-    result = list()
-    for f1 in filename:
-        with open(f1, 'r') as infile:
-            result.extend(json.load(infile))
-
-    with open('result_union.json', 'w') as output_file:
-        json.dump(result, output_file)
+    #print(mesh_list)
 
 if __name__ == '__main__':
     jsoninsert()
-
-    #files=['result0.json','result1.json']
-    #merge_JsonFiles(files)
 
 
