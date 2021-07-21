@@ -52,10 +52,24 @@ For the Installation the following steps are required after cloning/forking this
 > Docker Docs : [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
 **Creating Virtual Environment for Usage**
+On Linux and MacOS
+```shell
+$ python3 -m venv venv
 ```
-pip install virtualenv
-# Once Inside the Project Folder
-virtualenv env
+On Windows
+```shell
+$ py -m venv venv
+```
+To activate and work with your virtual python environment, please run this command:
+
+On Linux and MacOs
+```shell
+$ source venv/bin/activate
+```
+
+On Windows
+```shell
+.\venv\Scripts\activate
 ```
 
 **Further Instructions**
