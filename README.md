@@ -9,6 +9,7 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 ## Table of contents
 - [Table of contents](#table-of-contents)
 - [Overview](#overview)
+- [Entities and Properties](#entities-and-properties)
 - [How to use](#how-to-use)
   - [Installation](#installation)
   - [Customizing Wikibase](#customizing-wikibase)
