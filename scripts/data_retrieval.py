@@ -12,12 +12,12 @@ import spacy
 import scispacy
 from scispacy.linking import EntityLinker
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+#from selenium import webdriver
+#from selenium.webdriver.chrome.options import Options
 import time
 
 #function to get a list of all jsondicts
-def IDacq(queryterm: str):
+def IDacq(retmaximum, queryterm: str):
     """creates a List of all the Article-IDs based on the Queryterm
 
     Args:
@@ -28,7 +28,7 @@ def IDacq(queryterm: str):
     """
     #Constants
     baseurl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?api_key=64a858580cdbab48732231789433c6dfa108&'
-    retmax = 1000
+    retmax = retmaximum
     database = "db=pubmed"
     #process the query to not have spaces but "+"
     query = ''
@@ -68,7 +68,7 @@ def IDacq(queryterm: str):
     print(len(set(IDLIST)))
     return IDLIST
 
-def dataaquisition(queryterm):
+def dataaquisition(retmaximum, queryterm):
     """
     generates a list of all dictionaries with the metadata information and a list of all MeshTerms used.
     Args:
@@ -80,7 +80,7 @@ def dataaquisition(queryterm):
     nlp = spacy.load("en_core_sci_sm")
     nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "mesh"})
     #Get the list of all IDs
-    IDLIST = IDacq(queryterm)
+    IDLIST = IDacq(retmaximum, queryterm)
     dicts = []
     dflist = []
     timelist = []
@@ -161,6 +161,7 @@ def dataaquisition(queryterm):
     df = pd.DataFrame(dflist,columns=['MeSH Unique ID','MeSH Heading','ScopeNote'])
     df = df.drop_duplicates(subset=['MeSH Unique ID'])
     df['MeSHBrowserLink'] = 'https://meshb.nlm.nih.gov/record/ui?ui=' + df['MeSH Unique ID']
+    '''
     TNlist = []
     options = Options()
     options.headless = True
@@ -187,11 +188,12 @@ def dataaquisition(queryterm):
         timelist.append(end-start)
         print("MeSHTerm:",str(urllist.index(n)+1)+"/"+str(len(urllist)),"Est. time left:",time.strftime('%H:%M:%S',time.gmtime(int(sum(timelist)/len(timelist)*(len(urllist)-urllist.index(n))))),"Hours")
     df['TreeNumbers'] = TNlist
+    '''
     df.to_csv('meshtermlist.csv')
     return dicts
 
-def main(queryterm):
-    result = dataaquisition(queryterm)
+def main(retmaximum, queryterm):
+    result = dataaquisition(retmaximum, queryterm)
     return result
 
 if __name__ == '__main__':

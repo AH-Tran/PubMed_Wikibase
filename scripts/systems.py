@@ -15,12 +15,12 @@ if __name__ == "__main__":
     Returns:
         list of dict: list of dictionaries we can iterate after with the other function to upload them to the wikibase
     """
-    retmaximum = 250
+    retmaximum = 1
     queryterm ='infectious diseases'
     time0 = time.time()
 
     # Execute scripts
-    create_properties.first_property_setup()
+    #create_properties.first_property_setup()
     metadata = data_retrieval.main(retmaximum, queryterm)
     #create_mesh_items.main('meshtermlist.csv')
     create_items_wd.main(metadata)
