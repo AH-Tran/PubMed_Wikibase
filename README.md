@@ -29,6 +29,9 @@ Automated creation and filling of a new wikibase instance with PubMed metadata a
 A Repository that specializes itself in creating a fresh Wikibase instance filled with relevant PubMed metadata and MeSH Headings from the NLM Database.
 ![image info](./doc/overview.PNG)
 
+## Knowledge Graph Structure
+
+
 ## How to use
 
 ### Installation
